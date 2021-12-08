@@ -33,12 +33,8 @@ var ErrUnknownStruct = errors.New("unable to determine HMS Type from struct")
 
 // GetHMSType for a given xname structure will return its HMSType
 func GetHMSType(obj interface{}) (xnametypes.HMSType, error) {
-	// Handy bash fragment to generate the type switch below
-	// for hms_type in $(cat ./xname/types.go | grep '^type' | awk '{print $2}'); do
-	// echo "	case $hms_type, *$hms_type:"
-	// echo "		return xnametypes.$hms_type, nil"
-	// done
 	switch obj.(type) {
+
 	case System, *System:
 		return xnametypes.System, nil
 	case CDU, *CDU:
@@ -47,32 +43,97 @@ func GetHMSType(obj interface{}) (xnametypes.HMSType, error) {
 		return xnametypes.CDUMgmtSwitch, nil
 	case Cabinet, *Cabinet:
 		return xnametypes.Cabinet, nil
+	case CEC, *CEC:
+		return xnametypes.CEC, nil
+	case CabinetBMC, *CabinetBMC:
+		return xnametypes.CabinetBMC, nil
+	case CabinetCDU, *CabinetCDU:
+		return xnametypes.CabinetCDU, nil
 	case CabinetPDUController, *CabinetPDUController:
 		return xnametypes.CabinetPDUController, nil
+	case CabinetPDU, *CabinetPDU:
+		return xnametypes.CabinetPDU, nil
+	case CabinetPDUOutlet, *CabinetPDUOutlet:
+		return xnametypes.CabinetPDUOutlet, nil
+	case CabinetPDUPowerConnector, *CabinetPDUPowerConnector:
+		return xnametypes.CabinetPDUPowerConnector, nil
+	case CabinetPDUNic, *CabinetPDUNic:
+		return xnametypes.CabinetPDUNic, nil
 	case Chassis, *Chassis:
 		return xnametypes.Chassis, nil
+	case CMMFpga, *CMMFpga:
+		return xnametypes.CMMFpga, nil
+	case CMMRectifier, *CMMRectifier:
+		return xnametypes.CMMRectifier, nil
 	case ChassisBMC, *ChassisBMC:
 		return xnametypes.ChassisBMC, nil
-	case MgmtSwitch, *MgmtSwitch:
-		return xnametypes.MgmtSwitch, nil
-	case MgmtSwitchConnector, *MgmtSwitchConnector:
-		return xnametypes.MgmtSwitchConnector, nil
-	case MgmtHLSwitchEnclosure, *MgmtHLSwitchEnclosure:
-		return xnametypes.MgmtHLSwitchEnclosure, nil
-	case MgmtHLSwitch, *MgmtHLSwitch:
-		return xnametypes.MgmtHLSwitch, nil
-	case RouterModule, *RouterModule:
-		return xnametypes.RouterModule, nil
-	case RouterBMC, *RouterBMC:
-		return xnametypes.RouterBMC, nil
+	case ChassisBMCNic, *ChassisBMCNic:
+		return xnametypes.ChassisBMCNic, nil
 	case ComputeModule, *ComputeModule:
 		return xnametypes.ComputeModule, nil
 	case NodeBMC, *NodeBMC:
 		return xnametypes.NodeBMC, nil
 	case Node, *Node:
 		return xnametypes.Node, nil
+	case Memory, *Memory:
+		return xnametypes.Memory, nil
+	case NodeAccel, *NodeAccel:
+		return xnametypes.NodeAccel, nil
+	case NodeAccelRiser, *NodeAccelRiser:
+		return xnametypes.NodeAccelRiser, nil
+	case NodeHsnNic, *NodeHsnNic:
+		return xnametypes.NodeHsnNic, nil
+	case NodeNic, *NodeNic:
+		return xnametypes.NodeNic, nil
+	case Processor, *Processor:
+		return xnametypes.Processor, nil
+	case StorageGroup, *StorageGroup:
+		return xnametypes.StorageGroup, nil
+	case Drive, *Drive:
+		return xnametypes.Drive, nil
+	case NodeBMCNic, *NodeBMCNic:
+		return xnametypes.NodeBMCNic, nil
+	case NodeEnclosure, *NodeEnclosure:
+		return xnametypes.NodeEnclosure, nil
+	case NodeEnclosurePowerSupply, *NodeEnclosurePowerSupply:
+		return xnametypes.NodeEnclosurePowerSupply, nil
+	case NodeFpga, *NodeFpga:
+		return xnametypes.NodeFpga, nil
+	case NodePowerConnector, *NodePowerConnector:
+		return xnametypes.NodePowerConnector, nil
+	case MgmtHLSwitchEnclosure, *MgmtHLSwitchEnclosure:
+		return xnametypes.MgmtHLSwitchEnclosure, nil
+	case MgmtHLSwitch, *MgmtHLSwitch:
+		return xnametypes.MgmtHLSwitch, nil
+	case MgmtSwitch, *MgmtSwitch:
+		return xnametypes.MgmtSwitch, nil
+	case MgmtSwitchConnector, *MgmtSwitchConnector:
+		return xnametypes.MgmtSwitchConnector, nil
+	case RouterModule, *RouterModule:
+		return xnametypes.RouterModule, nil
+	case HSNAsic, *HSNAsic:
+		return xnametypes.HSNAsic, nil
+	case HSNLink, *HSNLink:
+		return xnametypes.HSNLink, nil
+	case HSNBoard, *HSNBoard:
+		return xnametypes.HSNBoard, nil
+	case HSNConnector, *HSNConnector:
+		return xnametypes.HSNConnector, nil
+	case HSNConnectorPort, *HSNConnectorPort:
+		return xnametypes.HSNConnectorPort, nil
+	case RouterBMC, *RouterBMC:
+		return xnametypes.RouterBMC, nil
+	case RouterBMCNic, *RouterBMCNic:
+		return xnametypes.RouterBMCNic, nil
+	case RouterFpga, *RouterFpga:
+		return xnametypes.RouterFpga, nil
+	case RouterPowerConnector, *RouterPowerConnector:
+		return xnametypes.RouterPowerConnector, nil
+	case RouterTOR, *RouterTOR:
+		return xnametypes.RouterTOR, nil
+	case RouterTORFpga, *RouterTORFpga:
+		return xnametypes.RouterTORFpga, nil
 	}
-
 	return xnametypes.HMSTypeInvalid, ErrUnknownStruct
 }
 
@@ -117,92 +178,337 @@ func FromString(xname string) (interface{}, xnametypes.HMSType) {
 		component = System{}
 	case xnametypes.CDU:
 		component = CDU{
-			CoolingGroup: matches[0],
+			CDU: matches[0],
 		}
 	case xnametypes.CDUMgmtSwitch:
 		component = CDUMgmtSwitch{
-			CoolingGroup: matches[0],
-			Slot:         matches[1],
+			CDU:           matches[0],
+			CDUMgmtSwitch: matches[1],
 		}
 	case xnametypes.Cabinet:
 		component = Cabinet{
 			Cabinet: matches[0],
 		}
+	case xnametypes.CEC:
+		component = CEC{
+			Cabinet: matches[0],
+			CEC:     matches[1],
+		}
+	case xnametypes.CabinetBMC:
+		component = CabinetBMC{
+			Cabinet:    matches[0],
+			CabinetBMC: matches[1],
+		}
+	case xnametypes.CabinetCDU:
+		component = CabinetCDU{
+			Cabinet:    matches[0],
+			CabinetCDU: matches[1],
+		}
 	case xnametypes.CabinetPDUController:
 		component = CabinetPDUController{
-			Cabinet:       matches[0],
-			PDUController: matches[1],
+			Cabinet:              matches[0],
+			CabinetPDUController: matches[1],
+		}
+	case xnametypes.CabinetPDU:
+		component = CabinetPDU{
+			Cabinet:              matches[0],
+			CabinetPDUController: matches[1],
+			CabinetPDU:           matches[2],
+		}
+	case xnametypes.CabinetPDUOutlet:
+		component = CabinetPDUOutlet{
+			Cabinet:              matches[0],
+			CabinetPDUController: matches[1],
+			CabinetPDU:           matches[2],
+			CabinetPDUOutlet:     matches[3],
+		}
+	case xnametypes.CabinetPDUPowerConnector:
+		component = CabinetPDUPowerConnector{
+			Cabinet:                  matches[0],
+			CabinetPDUController:     matches[1],
+			CabinetPDU:               matches[2],
+			CabinetPDUPowerConnector: matches[3],
+		}
+	case xnametypes.CabinetPDUNic:
+		component = CabinetPDUNic{
+			Cabinet:              matches[0],
+			CabinetPDUController: matches[1],
+			CabinetPDUNic:        matches[2],
 		}
 	case xnametypes.Chassis:
 		component = Chassis{
 			Cabinet: matches[0],
 			Chassis: matches[1],
 		}
+	case xnametypes.CMMFpga:
+		component = CMMFpga{
+			Cabinet: matches[0],
+			Chassis: matches[1],
+			CMMFpga: matches[2],
+		}
+	case xnametypes.CMMRectifier:
+		component = CMMRectifier{
+			Cabinet:      matches[0],
+			Chassis:      matches[1],
+			CMMRectifier: matches[2],
+		}
 	case xnametypes.ChassisBMC:
 		component = ChassisBMC{
-			Cabinet: matches[0],
-			Chassis: matches[1],
-			BMC:     matches[2],
-		}
-	case xnametypes.MgmtSwitch:
-		component = MgmtSwitch{
-			Cabinet: matches[0],
-			Chassis: matches[1],
-			Slot:    matches[2],
-		}
-	case xnametypes.MgmtSwitchConnector:
-		component = MgmtSwitchConnector{
 			Cabinet:    matches[0],
 			Chassis:    matches[1],
-			Slot:       matches[2],
-			SwitchPort: matches[3],
+			ChassisBMC: matches[2],
 		}
-	case xnametypes.MgmtHLSwitchEnclosure:
-		component = MgmtHLSwitchEnclosure{
-			Cabinet: matches[0],
-			Chassis: matches[1],
-			Slot:    matches[2],
-		}
-	case xnametypes.MgmtHLSwitch:
-		component = MgmtHLSwitch{
-			Cabinet: matches[0],
-			Chassis: matches[1],
-			Slot:    matches[2],
-			Space:   matches[3],
-		}
-	case xnametypes.RouterModule:
-		component = RouterModule{
-			Cabinet: matches[0],
-			Chassis: matches[1],
-			Slot:    matches[2],
-		}
-	case xnametypes.RouterBMC:
-		component = RouterBMC{
-			Cabinet: matches[0],
-			Chassis: matches[1],
-			Slot:    matches[2],
-			BMC:     matches[3],
+	case xnametypes.ChassisBMCNic:
+		component = ChassisBMCNic{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ChassisBMC:    matches[2],
+			ChassisBMCNic: matches[3],
 		}
 	case xnametypes.ComputeModule:
 		component = ComputeModule{
-			Cabinet: matches[0],
-			Chassis: matches[1],
-			Slot:    matches[2],
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
 		}
 	case xnametypes.NodeBMC:
 		component = NodeBMC{
-			Cabinet: matches[0],
-			Chassis: matches[1],
-			Slot:    matches[2],
-			BMC:     matches[3],
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeBMC:       matches[3],
 		}
 	case xnametypes.Node:
 		component = Node{
-			Cabinet: matches[0],
-			Chassis: matches[1],
-			Slot:    matches[2],
-			BMC:     matches[3],
-			Node:    matches[4],
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeBMC:       matches[3],
+			Node:          matches[4],
+		}
+	case xnametypes.Memory:
+		component = Memory{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeBMC:       matches[3],
+			Node:          matches[4],
+			Memory:        matches[5],
+		}
+	case xnametypes.NodeAccel:
+		component = NodeAccel{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeBMC:       matches[3],
+			Node:          matches[4],
+			NodeAccel:     matches[5],
+		}
+	case xnametypes.NodeAccelRiser:
+		component = NodeAccelRiser{
+			Cabinet:        matches[0],
+			Chassis:        matches[1],
+			ComputeModule:  matches[2],
+			NodeBMC:        matches[3],
+			Node:           matches[4],
+			NodeAccelRiser: matches[5],
+		}
+	case xnametypes.NodeHsnNic:
+		component = NodeHsnNic{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeBMC:       matches[3],
+			Node:          matches[4],
+			NodeHsnNic:    matches[5],
+		}
+	case xnametypes.NodeNic:
+		component = NodeNic{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeBMC:       matches[3],
+			Node:          matches[4],
+			NodeNic:       matches[5],
+		}
+	case xnametypes.Processor:
+		component = Processor{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeBMC:       matches[3],
+			Node:          matches[4],
+			Processor:     matches[5],
+		}
+	case xnametypes.StorageGroup:
+		component = StorageGroup{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeBMC:       matches[3],
+			Node:          matches[4],
+			StorageGroup:  matches[5],
+		}
+	case xnametypes.Drive:
+		component = Drive{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeBMC:       matches[3],
+			Node:          matches[4],
+			StorageGroup:  matches[5],
+			Drive:         matches[6],
+		}
+	case xnametypes.NodeBMCNic:
+		component = NodeBMCNic{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeBMC:       matches[3],
+			NodeBMCNic:    matches[4],
+		}
+	case xnametypes.NodeEnclosure:
+		component = NodeEnclosure{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeEnclosure: matches[3],
+		}
+	case xnametypes.NodeEnclosurePowerSupply:
+		component = NodeEnclosurePowerSupply{
+			Cabinet:                  matches[0],
+			Chassis:                  matches[1],
+			ComputeModule:            matches[2],
+			NodeEnclosure:            matches[3],
+			NodeEnclosurePowerSupply: matches[4],
+		}
+	case xnametypes.NodeFpga:
+		component = NodeFpga{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeEnclosure: matches[3],
+			NodeFpga:      matches[4],
+		}
+	case xnametypes.NodePowerConnector:
+		component = NodePowerConnector{
+			Cabinet:            matches[0],
+			Chassis:            matches[1],
+			ComputeModule:      matches[2],
+			NodePowerConnector: matches[3],
+		}
+	case xnametypes.MgmtHLSwitchEnclosure:
+		component = MgmtHLSwitchEnclosure{
+			Cabinet:               matches[0],
+			Chassis:               matches[1],
+			MgmtHLSwitchEnclosure: matches[2],
+		}
+	case xnametypes.MgmtHLSwitch:
+		component = MgmtHLSwitch{
+			Cabinet:               matches[0],
+			Chassis:               matches[1],
+			MgmtHLSwitchEnclosure: matches[2],
+			MgmtHLSwitch:          matches[3],
+		}
+	case xnametypes.MgmtSwitch:
+		component = MgmtSwitch{
+			Cabinet:    matches[0],
+			Chassis:    matches[1],
+			MgmtSwitch: matches[2],
+		}
+	case xnametypes.MgmtSwitchConnector:
+		component = MgmtSwitchConnector{
+			Cabinet:             matches[0],
+			Chassis:             matches[1],
+			MgmtSwitch:          matches[2],
+			MgmtSwitchConnector: matches[3],
+		}
+	case xnametypes.RouterModule:
+		component = RouterModule{
+			Cabinet:      matches[0],
+			Chassis:      matches[1],
+			RouterModule: matches[2],
+		}
+	case xnametypes.HSNAsic:
+		component = HSNAsic{
+			Cabinet:      matches[0],
+			Chassis:      matches[1],
+			RouterModule: matches[2],
+			HSNAsic:      matches[3],
+		}
+	case xnametypes.HSNLink:
+		component = HSNLink{
+			Cabinet:      matches[0],
+			Chassis:      matches[1],
+			RouterModule: matches[2],
+			HSNAsic:      matches[3],
+			HSNLink:      matches[4],
+		}
+	case xnametypes.HSNBoard:
+		component = HSNBoard{
+			Cabinet:      matches[0],
+			Chassis:      matches[1],
+			RouterModule: matches[2],
+			HSNBoard:     matches[3],
+		}
+	case xnametypes.HSNConnector:
+		component = HSNConnector{
+			Cabinet:      matches[0],
+			Chassis:      matches[1],
+			RouterModule: matches[2],
+			HSNConnector: matches[3],
+		}
+	case xnametypes.HSNConnectorPort:
+		component = HSNConnectorPort{
+			Cabinet:          matches[0],
+			Chassis:          matches[1],
+			RouterModule:     matches[2],
+			HSNConnector:     matches[3],
+			HSNConnectorPort: matches[4],
+		}
+	case xnametypes.RouterBMC:
+		component = RouterBMC{
+			Cabinet:      matches[0],
+			Chassis:      matches[1],
+			RouterModule: matches[2],
+			RouterBMC:    matches[3],
+		}
+	case xnametypes.RouterBMCNic:
+		component = RouterBMCNic{
+			Cabinet:      matches[0],
+			Chassis:      matches[1],
+			RouterModule: matches[2],
+			RouterBMC:    matches[3],
+			RouterBMCNic: matches[4],
+		}
+	case xnametypes.RouterFpga:
+		component = RouterFpga{
+			Cabinet:      matches[0],
+			Chassis:      matches[1],
+			RouterModule: matches[2],
+			RouterFpga:   matches[3],
+		}
+	case xnametypes.RouterPowerConnector:
+		component = RouterPowerConnector{
+			Cabinet:              matches[0],
+			Chassis:              matches[1],
+			RouterModule:         matches[2],
+			RouterPowerConnector: matches[3],
+		}
+	case xnametypes.RouterTOR:
+		component = RouterTOR{
+			Cabinet:      matches[0],
+			Chassis:      matches[1],
+			RouterModule: matches[2],
+			RouterTOR:    matches[3],
+		}
+	case xnametypes.RouterTORFpga:
+		component = RouterTORFpga{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			RouterModule:  matches[2],
+			RouterTOR:     matches[3],
+			RouterTORFpga: matches[4],
 		}
 	default:
 		return nil, xnametypes.HMSTypeInvalid

@@ -120,6 +120,7 @@ var ErrHMSTypeUnsupported = e.NewChild("HMSType value not supported for this ope
 type HMSCompRecognitionEntry struct {
 	Type       HMSType
 	ParentType HMSType
+	ExampleString string
 	Regex      *regexp.Regexp
 	GenStr     string
 	NumArgs    int
@@ -131,6 +132,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"invalid": {
 		HMSTypeInvalid,
 		HMSTypeInvalid,
+		"INVALID",
 		regexp.MustCompile("INVALID"),
 		"INVALID",
 		0,
@@ -138,6 +140,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"hmstypeall": {
 		HMSTypeAll,
 		HMSTypeInvalid,
+		"all",
 		regexp.MustCompile("^all$"),
 		"all",
 		0,
@@ -145,6 +148,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"hmstypeallsvc": {
 		HMSTypeAllSvc,
 		HMSTypeInvalid,
+		"all_svc",
 		regexp.MustCompile("^all_svc$"),
 		"all_svc",
 		0,
@@ -152,6 +156,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"hmstypeallcomp": {
 		HMSTypeAllComp,
 		HMSTypeInvalid,
+		"all_comp",
 		regexp.MustCompile("^all_comp$"),
 		"all_comp",
 		0,
@@ -159,6 +164,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"partition": {
 		Partition,
 		HMSTypeInvalid,
+		"pH.S",
 		regexp.MustCompile("^p([0-9]+)(.([0-9]+))?$"),
 		"p%d.%d",
 		2,
@@ -166,6 +172,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"system": {
 		System,
 		HMSTypeInvalid,
+		"sS",
 		regexp.MustCompile("^s0$"),
 		"s0",
 		0,
@@ -173,6 +180,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"smsbox": {
 		SMSBox,
 		HMSTypeInvalid,
+		"smsN",
 		regexp.MustCompile("^sms([0-9]+)$"),
 		"sms%d",
 		1,
@@ -180,6 +188,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cdu": {
 		CDU,
 		System,
+		"dD",
 		regexp.MustCompile("^d([0-9]+)$"),
 		"d%d",
 		1,
@@ -187,6 +196,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cdumgmtswitch": {
 		CDUMgmtSwitch,
 		CDU,
+		"dDwW",
 		regexp.MustCompile("^d([0-9]+)w([0-9]+)$"),
 		"d%dw%d",
 		2,
@@ -194,6 +204,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cabinetcdu": {
 		CabinetCDU,
 		Cabinet,
+		"xXdD",
 		regexp.MustCompile("^x([0-9]{1,4})d([0-1])$"),
 		"x%dd%d",
 		2,
@@ -201,6 +212,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cabinetpducontroller": {
 		CabinetPDUController,
 		Cabinet,
+		"xXmM",
 		regexp.MustCompile("^x([0-9]{1,4})m([0-3])$"),
 		"x%dm%d",
 		2,
@@ -208,6 +220,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cabinetpdu": {
 		CabinetPDU,
 		CabinetPDUController,
+		"xXmMpP",
 		regexp.MustCompile("^x([0-9]{1,4})m([0-3])p([0-7])$"),
 		"x%dm%dp%d",
 		3,
@@ -215,13 +228,15 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cabinetpdunic": {
 		CabinetPDUNic,
 		CabinetPDUController,
+		"xXmMpPiI",
 		regexp.MustCompile("^x([0-9]{1,4})m([0-3])i([0-3])$"),
-		"x%dm%dp%di%d",
+		"x%dm%di%d",
 		3,
 	},
 	"cabinetpduoutlet": {
 		CabinetPDUOutlet,
 		CabinetPDU,
+		"xXmMpPjJ",
 		regexp.MustCompile("^x([0-9]{1,4})m([0-3])p([0-7])j([1-9][0-9]*)$"),
 		"x%dm%dp%dj%d",
 		4,
@@ -229,6 +244,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cabinetpdupowerconnector": {
 		CabinetPDUPowerConnector,
 		CabinetPDU,
+		"xXmMpPvV",
 		regexp.MustCompile("^x([0-9]{1,4})m([0-3])p([0-7])v([1-9][0-9]*)$"),
 		"x%dm%dp%dv%d",
 		4,
@@ -236,6 +252,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cec": {
 		CEC,
 		Cabinet,
+		"xXeE",
 		regexp.MustCompile("^x([0-9]{1,4})e([0-1])$"),
 		"x%de%d",
 		2,
@@ -243,6 +260,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cabinet": {
 		Cabinet,
 		System,
+		"xX",
 		regexp.MustCompile("^x([0-9]{1,4})$"),
 		"x%d",
 		1,
@@ -250,6 +268,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cabinetbmc": {
 		CabinetBMC,
 		Cabinet,
+		"xXbB",
 		regexp.MustCompile("^x([0-9]{1,4})b([0])$"),
 		"x%db%d",
 		2,
@@ -257,6 +276,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"chassis": {
 		Chassis,
 		Cabinet,
+		"xXcC",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])$"),
 		"x%dc%d",
 		2,
@@ -264,6 +284,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"chassisbmc": {
 		ChassisBMC,
 		Chassis,
+		"xXcCbB",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])b([0])$"),
 		"x%dc%db%d",
 		3,
@@ -271,6 +292,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"chassisbmcnic": {
 		ChassisBMCNic,
 		ChassisBMC,
+		"xXcCbBiI",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])b([0])i([0-3])$"),
 		"x%dc%db%di%d",
 		3,
@@ -278,6 +300,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cmmfpga": {
 		CMMFpga,
 		Chassis,
+		"xXcCfF",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])f([0])$"),
 		"x%dc%df%d",
 		3,
@@ -285,6 +308,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"cmmrectifier": {
 		CMMRectifier,
 		Chassis,
+		"xXcCtT",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])t([0-9])$"),
 		"x%dc%dt%d",
 		3,
@@ -292,6 +316,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"computemodule": {
 		ComputeModule,
 		Chassis,
+		"xXcCsS",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)$"),
 		"x%dc%ds%d",
 		3,
@@ -299,6 +324,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"storagegroup": {
 		StorageGroup,
 		Node,
+		"xXcCsSbBnNgG",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)g([0-9]+)$"),
 		"x%dc%ds%db%dn%dg%d",
 		6,
@@ -306,6 +332,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"drive": {
 		Drive,
 		StorageGroup,
+		"xXcCsSbBnNgGkK",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)g([0-9]+)k([0-9]+)$"),
 		"x%dc%ds%db%dn%dg%dk%d",
 		7,
@@ -313,6 +340,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"nodefpga": {
 		NodeFpga,
 		NodeEnclosure,
+		"xXcCsSbBfF",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)f([0])$"),
 		"x%dc%ds%db%df%d",
 		5,
@@ -320,6 +348,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"nodebmc": {
 		NodeBMC,
 		ComputeModule,
+		"xXcCsSbB",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)$"),
 		"x%dc%ds%db%d",
 		4,
@@ -327,6 +356,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"nodebmcnic": {
 		NodeBMCNic,
 		NodeBMC,
+		"xXcCsSbBiI",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)i([0-3])$"),
 		"x%dc%ds%db%di%d",
 		5,
@@ -334,6 +364,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"nodeenclosure": {
 		NodeEnclosure,
 		ComputeModule,
+		"xXcCsSbBeE",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)e([0-9]+)$"),
 		"x%dc%ds%de%d",
 		4,
@@ -341,6 +372,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"nodeenclosurepowersupply": {
 		NodeEnclosurePowerSupply,
 		NodeEnclosure,
+		"xXcCsSbBeEtT",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)e([0-9]+)t([0-9]+)$"),
 		"x%dc%ds%de%dt%d",
 		5,
@@ -348,13 +380,15 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"nodepowerconnector": { //'j' is deprecated, should be 'v'
 		NodePowerConnector,
 		ComputeModule,
+		"xXcCsSv",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)[jv]([1-2])$"),
 		"x%dc%ds%dv%d",
 		4,
 	},
 	"hsnboard": {
 		HSNBoard,
-		RouterBMC,
+		RouterModule,
+		"xXcCrReE",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)e([0-9]+)$"),
 		"x%dc%dr%de%d",
 		4,
@@ -362,6 +396,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"node": {
 		Node,
 		NodeBMC, // Controlling entity is an nC or COTS BMC
+		"xXcCsSbBnN",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)$"),
 		"x%dc%ds%db%dn%d",
 		5,
@@ -369,6 +404,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"nodenic": {
 		NodeNic,
 		Node,
+		"xXcCsSbBnNiI",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)i([0-3])$"),
 		"x%dc%ds%db%dn%di%d",
 		6,
@@ -376,6 +412,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"nodehsnnic": {
 		NodeHsnNic,
 		Node,
+		"xXcCsSbBnNhH",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)h([0-3])$"),
 		"x%dc%ds%db%dn%dh%d",
 		6,
@@ -383,6 +420,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"nodeaccel": {
 		NodeAccel,
 		Node,
+		"xXcCsSbBnNaA",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)a([0-9]+)$"),
 		"x%dc%ds%db%dn%da%d",
 		6,
@@ -390,6 +428,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"nodeaccelriser": {
 		NodeAccelRiser,
 		Node,
+		"xXcCsSbBnNrR",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)r([0-7])$"),
 		"x%dc%ds%db%dn%dr%d",
 		6,
@@ -397,6 +436,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"memory": {
 		Memory,
 		Node, //parent is actually a socket but we'll use node
+		"xXcCsSbBnNdD",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)d([0-9]+)$"),
 		"x%dc%ds%db%dn%dd%d",
 		6,
@@ -404,6 +444,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"processor": {
 		Processor,
 		Node,
+		"xXcCsSbBnNpP",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)p([0-3])$"),
 		"x%dc%ds%db%dn%dp%d",
 		6,
@@ -411,6 +452,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"routermodule": {
 		RouterModule,
 		Chassis,
+		"xXcCrR",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)$"),
 		"x%dc%dr%d",
 		3,
@@ -418,6 +460,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"routerfpga": {
 		RouterFpga,
 		RouterModule,
+		"xXcCrRfF",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)f([01])$"),
 		"x%dc%dr%df%d",
 		4,
@@ -425,6 +468,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"routertor": {
 		RouterTOR,
 		RouterModule,
+		"xXcCrRtT",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)t([0-9]+)$"),
 		"x%dc%dr%dt%d",
 		4,
@@ -432,6 +476,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"routertorfpga": {
 		RouterTORFpga,
 		RouterTOR,
+		"xXcCrRtTfF",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)t([0-9]+)f([0-1])$"),
 		"x%dc%dr%dt%df%d",
 		5,
@@ -439,6 +484,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"routerbmc": {
 		RouterBMC,
 		RouterModule,
+		"xXcCrRbB",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)b([0-9]+)$"),
 		"x%dc%dr%db%d",
 		4,
@@ -446,6 +492,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"routerbmcnic": {
 		RouterBMCNic,
 		RouterBMC,
+		"xXcCrRbBiI",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)b([0-9]+)i([0-3])$"),
 		"x%dc%dr%db%di%d",
 		5,
@@ -453,6 +500,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"routerpowerconnector": {
 		RouterPowerConnector,
 		RouterModule,
+		"xXcCrRvV",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)v([1-2])$"),
 		"x%dc%dr%dv%d",
 		4,
@@ -460,6 +508,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"hsnasic": {
 		HSNAsic,
 		RouterModule,
+		"xXcCrRaA",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)a([0-3])$"),
 		"x%dc%dr%da%d",
 		4,
@@ -467,6 +516,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"hsnconnector": {
 		HSNConnector,
 		RouterModule,
+		"xXcCrRjJ",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)j([1-9][0-9]*)$"),
 		"x%dc%dr%dj%d",
 		4,
@@ -474,6 +524,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"hsnconnectorport": {
 		HSNConnectorPort,
 		HSNConnector,
+		"xXcCrRjJpP",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)j([1-9][0-9]*)p([012])$"),
 		"x%dc%dr%dj%dp%d",
 		5,
@@ -481,6 +532,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"hsnlink": {
 		HSNLink,
 		HSNAsic,
+		"xXcCrRaAlL",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)a([0-3])l([0-9]+)$"),
 		"x%dc%dr%da%dl%d",
 		5,
@@ -488,6 +540,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"mgmtswitch": {
 		MgmtSwitch,
 		Chassis,
+		"xXcCwW",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])w([1-9][0-9]*)$"),
 		"x%dc%dw%d",
 		3,
@@ -495,6 +548,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"mgmtswitchconnector": {
 		MgmtSwitchConnector,
 		MgmtSwitch,
+		"xXcCwWjJ",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])w([1-9][0-9]*)j([1-9][0-9]*)$"),
 		"x%dc%dw%dj%d",
 		4,
@@ -502,6 +556,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"mgmthlswitchenclosure": {
 		MgmtHLSwitchEnclosure,
 		Chassis,
+		"xXcChH",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])h([1-9][0-9]*)$"),
 		"x%dc%dh%d",
 		3,
@@ -509,6 +564,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	"mgmthlswitch": {
 		MgmtHLSwitch,
 		MgmtHLSwitchEnclosure,
+		"xXcChHsS",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])h([1-9][0-9]*)s([1-9])$"),
 		"x%dc%dh%ds%d",
 		4,
