@@ -1,0 +1,7 @@
+name: Run Unit Tests
+on: [push, pull_request]
+jobs:
+  run_unit_test:
+    uses: Cray-HPE/hms-build-scripts/.github/workflows/run_unit_test.yaml@develop
+    with:
+      runs-on: ubuntu-latest
