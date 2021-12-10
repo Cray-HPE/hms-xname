@@ -32,7 +32,7 @@ import (
 var ErrUnknownStruct = errors.New("unable to determine HMS Type from struct")
 
 // GetHMSType for a given xname structure will return its HMSType
-// If the given object is not a structure from the xnames package, 
+// If the given object is not a structure from the xnames package,
 // then the ErrUnknownStruct will be returned along with HMSTypeInvalid
 func GetHMSType(obj interface{}) (xnametypes.HMSType, error) {
 	switch obj.(type) {
@@ -140,7 +140,7 @@ func GetHMSType(obj interface{}) (xnametypes.HMSType, error) {
 }
 
 // FromString will convert the string representation of a xname into a xname structure
-// If the string is not a valid xname, then nil and HMSTypeInvalid will be returned. 
+// If the string is not a valid xname, then nil and HMSTypeInvalid will be returned.
 func FromString(xname string) (interface{}, xnametypes.HMSType) {
 	hmsType := xnametypes.GetHMSType(xname)
 	if hmsType == xnametypes.HMSTypeInvalid {
