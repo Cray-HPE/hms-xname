@@ -20,6 +20,9 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
+all: build unittest
+.PHONY: format generate build unittest
+
 format:
 	go fmt ./...
 
