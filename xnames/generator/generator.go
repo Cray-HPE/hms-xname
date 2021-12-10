@@ -12,14 +12,12 @@ import (
 )
 
 type XnameTypeNode struct {
-	Parent *XnameTypeNode
+	Parent   *XnameTypeNode
 	Children []*XnameTypeNode
-	
-	Level int
 
-	Entry xnametypes.HMSCompRecognitionEntry
+	Entry  xnametypes.HMSCompRecognitionEntry
 	Fields []string
-	
+
 	FunctionParameter string
 }
 
@@ -43,7 +41,7 @@ func main() {
 
 		if _, exists := nodes[entry.Type]; exists {
 			panic(fmt.Errorf("Error: entry type already exists: %v", entry))
-		} 
+		}
 
 		nodes[entry.Type] = &XnameTypeNode{
 			Entry: entry,
@@ -74,7 +72,7 @@ func main() {
 	for _, node := range nodes {
 		sort.Slice(node.Children, func(i, j int) bool {
 			return node.Children[i].Entry.Type < node.Children[j].Entry.Type
-		  })
+		})
 	}
 
 	// Determine fields

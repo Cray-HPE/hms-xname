@@ -20,10 +20,13 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
+format:
+	go fmt ./...
+
 generate:
 	go generate ./...
 
-build: generate
+build: generate format
 	go build ./...
 
 unittest: generate

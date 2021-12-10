@@ -239,7 +239,6 @@ var compIDValidateTD = []ValidateTestData{
 		[]string{"x0c0r0t0f0", "x0c0r0t0f1"},
 		[]string{"xXcCrRtTfF", "x0c0r0t0f2"},
 		false,
-
 	},
 }
 
@@ -260,7 +259,7 @@ func TestValidateCompIDs(t *testing.T) {
 }
 
 type GetHMSCompParentTestData struct {
-	xname  string
+	xname               string
 	expectedParentXname string
 }
 

@@ -118,12 +118,12 @@ var ErrHMSTypeInvalid = e.NewChild("got HMSTypeInvalid instead of valid type")
 var ErrHMSTypeUnsupported = e.NewChild("HMSType value not supported for this operation") // TODO should this be in base?
 
 type HMSCompRecognitionEntry struct {
-	Type       HMSType
-	ParentType HMSType
+	Type          HMSType
+	ParentType    HMSType
 	ExampleString string
-	Regex      *regexp.Regexp
-	GenStr     string
-	NumArgs    int
+	Regex         *regexp.Regexp
+	GenStr        string
+	NumArgs       int
 }
 
 // Component recognition table keyed by normalized (i.e. all lowercase)
@@ -577,7 +577,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	//	},
 }
 
-func GetHMSCompRecognitionTable() map[string]HMSCompRecognitionEntry{
+func GetHMSCompRecognitionTable() map[string]HMSCompRecognitionEntry {
 	copy := map[string]HMSCompRecognitionEntry{}
 
 	for k, v := range hmsCompRecognitionTable {
@@ -586,7 +586,6 @@ func GetHMSCompRecognitionTable() map[string]HMSCompRecognitionEntry{
 
 	return copy
 }
-
 
 // Get the HMSType for a given xname, based on its pattern in the recognition
 // table above.
@@ -738,25 +737,25 @@ func ToHMSType(typeStr string) HMSType {
 }
 
 // GetHMSTypeFormatString for a given HMSType will return the corresponding
-// fmt.Sprintf compatible format string, and the number of verbs are required 
+// fmt.Sprintf compatible format string, and the number of verbs are required
 // for the format string.
 func GetHMSTypeFormatString(hmsType HMSType) (string, int, error) {
 	typeLower := strings.ToLower(hmsType.String())
 	if value, ok := hmsCompRecognitionTable[typeLower]; ok {
 		return value.GenStr, value.NumArgs, nil
 	}
-	
+
 	return "", 0, fmt.Errorf("unknown HMSType: %s", hmsType)
 }
 
-// GetHMSTypeRegex for a given HMSType will return the regular expression 
-// that matches to match xnames of that HMSType. 
+// GetHMSTypeRegex for a given HMSType will return the regular expression
+// that matches to match xnames of that HMSType.
 func GetHMSTypeRegex(hmsType HMSType) (*regexp.Regexp, error) {
 	typeLower := strings.ToLower(hmsType.String())
 	if value, ok := hmsCompRecognitionTable[typeLower]; ok {
 		return value.Regex, nil
 	}
-	
+
 	return nil, fmt.Errorf("unknown HMSType: %s", hmsType)
 }
 

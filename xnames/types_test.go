@@ -31,26 +31,61 @@ import (
 	"github.com/Cray-HPE/hms-xname/xnametypes"
 )
 
-func TestFoo(t *testing.T) {
+func TestExample(t *testing.T) {
 	n := Node{
-		Cabinet: 1000,
-		Chassis: 1,
-		ComputeModule:    7,
-		NodeBMC:     1,
-		Node:    0,
+		Cabinet:       1000,
+		Chassis:       1,
+		ComputeModule: 7,
+		NodeBMC:       1,
+		Node:          0,
 	}
 
-	t.Log("Node:", n)
-	t.Log("NodeBMC:", n.Parent())
-	t.Log("NodeModule:", n.Parent().Parent())
-	t.Log("Chassis:", n.Parent().Parent().Parent())
-	t.Log("Cabinet:", n.Parent().Parent().Parent().Parent())
-	t.Log("System:", n.Parent().Parent().Parent().Parent().Parent())
+	nodeXname := n.String()
+	expectedNodeXname := "x1000c1s7b1n0"
+	if expectedNodeXname != nodeXname {
+		t.Fatalf("Unexpected node xname (%s), expected (%s)", nodeXname, expectedNodeXname)
+	}
+	
+	nodeBMCXname := n.Parent().String()
+	expectedNodeBMCXname := "x1000c1s7b1"
+	if expectedNodeBMCXname != nodeBMCXname {
+		t.Fatalf("Unexpected node bmc xname (%s), expected (%s)", nodeBMCXname, expectedNodeXname)
+	}
+	
+	computeModuleXname := n.Parent().Parent().String()
+	expectedComputeModuleXname := "x1000c1s7"
+	if expectedComputeModuleXname != computeModuleXname {
+		t.Fatalf("Unexpected compute module xname (%s), expected (%s)", computeModuleXname, expectedComputeModuleXname)
+	}
+	
+	chassisXname := n.Parent().Parent().Parent().String()
+	expectedChassisXname := "x1000c1"
+	if expectedChassisXname != chassisXname {
+		t.Fatalf("Unexpected chassis xname (%s), expected (%s)", chassisXname, expectedChassisXname)
+	}
+	
+	cabinetXname := n.Parent().Parent().Parent().Parent().String()
+	expectedCabinetXname := "x1000"
+	if expectedCabinetXname != cabinetXname {
+		t.Fatalf("Unexpected cabinet xname (%s), expected (%s)", cabinetXname, expectedCabinetXname)
+	}
+	
+	systemXname := n.Parent().Parent().Parent().Parent().Parent().String()
+	expectedSystemXname := "s0"
+	if expectedSystemXname != systemXname {
+		t.Fatalf("Unexpected system xname (%s), expected (%s)", systemXname, expectedSystemXname)
+	}
 
+	
 	// n = Cabinet{Cabinet: 1000}.Chassis(1).NodeBMC(7, 1).Node(0)
 	// t.Log("Node:", n)
+	expectedNodeXname = "x1000c1s7b1n0"
 	n = Cabinet{Cabinet: 1000}.Chassis(1).ComputeModule(7).NodeBMC(1).Node(0)
 	t.Log("Node:", n)
+	if expectedNodeXname != n.String() {
+		t.Fatalf("Unexpected node xname (%s), expected (%s)", n.String(), expectedNodeXname)
+	}
+
 	n = System{}.
 		Cabinet(1000).
 		Chassis(1).
@@ -58,6 +93,9 @@ func TestFoo(t *testing.T) {
 		NodeBMC(1).
 		Node(0)
 	t.Log("Node:", n)
+	if expectedNodeXname != n.String() {
+		t.Fatalf("Unexpected node xname (%s), expected (%s)", n.String(), expectedNodeXname)
+	}
 
 	// n = System{}.
 	// 	Cabinet(1000).
@@ -67,11 +105,11 @@ func TestFoo(t *testing.T) {
 	// t.Log("Node:", n)
 
 	n = Node{
-		Cabinet: 1000,
-		Chassis: 1,
-		ComputeModule:    7,
-		NodeBMC:     1,
-		Node:    0,
+		Cabinet:       1000,
+		Chassis:       1,
+		ComputeModule: 7,
+		NodeBMC:       1,
+		Node:          0,
 	}
 
 	hmsType, err := GetHMSType(n)
@@ -95,9 +133,9 @@ func TestFoo(t *testing.T) {
 	t.Log("CDU Switch:", cduSwitch)
 
 	ms := MgmtSwitch{
-		Cabinet: 1,  // X: 0-999
-		Chassis: 0,  // C: 0-7
-		MgmtSwitch:    32, // W: 1-48
+		Cabinet:    1,  // X: 0-999
+		Chassis:    0,  // C: 0-7
+		MgmtSwitch: 32, // W: 1-48
 	}
 	t.Log("MgmtSwitch:", ms)
 
@@ -144,11 +182,11 @@ func TestRegex(t *testing.T) {
 	t.Log("Matches", matches)
 
 	node := Node{
-		Cabinet: matches[0],
-		Chassis: matches[1],
-		ComputeModule:    matches[2],
-		NodeBMC:     matches[3],
-		Node:    matches[4],
+		Cabinet:       matches[0],
+		Chassis:       matches[1],
+		ComputeModule: matches[2],
+		NodeBMC:       matches[3],
+		Node:          matches[4],
 	}
 
 	t.Log("Node", node)
@@ -176,8 +214,8 @@ func TestToFromXnames(t *testing.T) {
 		}, {
 			"d0w1", xnametypes.CDUMgmtSwitch,
 			CDUMgmtSwitch{
-				CDU: 0,
-				CDUMgmtSwitch:         1,
+				CDU:           0,
+				CDUMgmtSwitch: 1,
 			},
 		}, {
 			"x1",
@@ -196,95 +234,95 @@ func TestToFromXnames(t *testing.T) {
 			"x1c2b0",
 			xnametypes.ChassisBMC,
 			ChassisBMC{
-				Cabinet: 1,
-				Chassis: 2,
-				ChassisBMC:     0,
+				Cabinet:    1,
+				Chassis:    2,
+				ChassisBMC: 0,
 			},
-		// }, { // TODO This causes a panic
-		// 	"x1c2b3",
-		// 	xnametypes.ChassisBMC,
-		// 	ChassisBMC{
-		// 		Cabinet: 1,
-		// 		Chassis: 2,
-		// 		BMC:     3,
-		// 	},
+			// }, { // TODO This causes a panic
+			// 	"x1c2b3",
+			// 	xnametypes.ChassisBMC,
+			// 	ChassisBMC{
+			// 		Cabinet: 1,
+			// 		Chassis: 2,
+			// 		BMC:     3,
+			// 	},
 		}, {
 			"x1c2h3",
 			xnametypes.MgmtHLSwitchEnclosure,
 			MgmtHLSwitchEnclosure{
-				Cabinet: 1,
-				Chassis: 2,
-				MgmtHLSwitchEnclosure:    3,
+				Cabinet:               1,
+				Chassis:               2,
+				MgmtHLSwitchEnclosure: 3,
 			},
 		}, {
 			"x1c2h3s4",
 			xnametypes.MgmtHLSwitch,
 			MgmtHLSwitch{
-				Cabinet: 1,
-				Chassis: 2,
-				MgmtHLSwitchEnclosure:    3,
-				MgmtHLSwitch:   4,
+				Cabinet:               1,
+				Chassis:               2,
+				MgmtHLSwitchEnclosure: 3,
+				MgmtHLSwitch:          4,
 			},
 		}, {
 			"x1c2w3",
 			xnametypes.MgmtSwitch,
 			MgmtSwitch{
-				Cabinet: 1,
-				Chassis: 2,
-				MgmtSwitch:    3,
+				Cabinet:    1,
+				Chassis:    2,
+				MgmtSwitch: 3,
 			},
 		}, {
 			"x1c2w3j4",
 			xnametypes.MgmtSwitchConnector,
 			MgmtSwitchConnector{
-				Cabinet:    1,
-				Chassis:    2,
-				MgmtSwitch:       3,
+				Cabinet:             1,
+				Chassis:             2,
+				MgmtSwitch:          3,
 				MgmtSwitchConnector: 4,
 			},
 		}, {
 			"x1c2r3",
 			xnametypes.RouterModule,
 			RouterModule{
-				Cabinet: 1,
-				Chassis: 2,
-				RouterModule:    3,
+				Cabinet:      1,
+				Chassis:      2,
+				RouterModule: 3,
 			},
 		}, {
 			"x1c2r3b4",
 			xnametypes.RouterBMC,
 			RouterBMC{
-				Cabinet: 1,
-				Chassis: 2,
-				RouterModule:    3,
-				RouterBMC:     4,
+				Cabinet:      1,
+				Chassis:      2,
+				RouterModule: 3,
+				RouterBMC:    4,
 			},
 		}, {
 			"x1c2s3",
 			xnametypes.ComputeModule,
 			ComputeModule{
-				Cabinet: 1,
-				Chassis: 2,
-				ComputeModule:    3,
+				Cabinet:       1,
+				Chassis:       2,
+				ComputeModule: 3,
 			},
 		}, {
 			"x1c2s3b4",
 			xnametypes.NodeBMC,
 			NodeBMC{
-				Cabinet: 1,
-				Chassis: 2,
-				ComputeModule:    3,
-				NodeBMC:     4,
+				Cabinet:       1,
+				Chassis:       2,
+				ComputeModule: 3,
+				NodeBMC:       4,
 			},
 		}, {
 			"x1c2s3b4n5",
 			xnametypes.Node,
 			Node{
-				Cabinet: 1,
-				Chassis: 2,
-				ComputeModule:    3,
-				NodeBMC:     4,
-				Node:    5,
+				Cabinet:       1,
+				Chassis:       2,
+				ComputeModule: 3,
+				NodeBMC:       4,
+				Node:          5,
 			},
 		},
 	}
@@ -372,7 +410,7 @@ func TestCDUChildren(t *testing.T) {
 	// Create a child CDUMgmtSwitch
 	cduMgmtSwitch := cdu.CDUMgmtSwitch(2)
 	expectedCDUMgmtSwitch := CDUMgmtSwitch{
-		CDU: 1,
+		CDU:           1,
 		CDUMgmtSwitch: 2,
 	}
 	if !reflect.DeepEqual(expectedCDUMgmtSwitch, cduMgmtSwitch) {
@@ -400,7 +438,7 @@ func TestCabinetChildren(t *testing.T) {
 	// Create a child CabinetPDUController
 	cabinetPDUController := cabinet.CabinetPDUController(2)
 	expectedCabinetPDUController := CabinetPDUController{
-		Cabinet: 1,
+		Cabinet:              1,
 		CabinetPDUController: 2,
 	}
 	if !reflect.DeepEqual(expectedCabinetPDUController, cabinetPDUController) {
@@ -422,7 +460,7 @@ func TestCabinetParent(t *testing.T) {
 	cabinet := Cabinet{
 		Cabinet: 1,
 	}
-	
+
 	parent := cabinet.Parent()
 	expectedParent := System{}
 	if !reflect.DeepEqual(expectedParent, parent) {
@@ -436,10 +474,10 @@ func TestCabinetPDUControllerChildren(t *testing.T) {
 
 func TestCabinetPDUControllerParent(t *testing.T) {
 	cabinetPDUController := CabinetPDUController{
-		Cabinet: 1,
+		Cabinet:              1,
 		CabinetPDUController: 2,
 	}
-	
+
 	parent := cabinetPDUController.Parent()
 	expectedParent := Cabinet{
 		Cabinet: 1,
@@ -458,8 +496,8 @@ func TestChassisChildren(t *testing.T) {
 	// Create a child ComputeModule
 	computeModule := chassis.ComputeModule(3)
 	expectedComputeModule := ComputeModule{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:       1,
+		Chassis:       2,
 		ComputeModule: 3,
 	}
 	if !reflect.DeepEqual(expectedComputeModule, computeModule) {
@@ -469,8 +507,8 @@ func TestChassisChildren(t *testing.T) {
 	// Create a child MgmtSwitch
 	mgmtSwitch := chassis.MgmtSwitch(3)
 	expectedMgmtSwitch := MgmtSwitch{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:    1,
+		Chassis:    2,
 		MgmtSwitch: 3,
 	}
 	if !reflect.DeepEqual(expectedMgmtSwitch, mgmtSwitch) {
@@ -480,8 +518,8 @@ func TestChassisChildren(t *testing.T) {
 	// Create a child MgmtHLSwitchEnclosure
 	mgmtHLSwitchEnclosure := chassis.MgmtHLSwitchEnclosure(3)
 	expectedMgmtHLSwitchEnclosure := MgmtHLSwitchEnclosure{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:               1,
+		Chassis:               2,
 		MgmtHLSwitchEnclosure: 3,
 	}
 	if !reflect.DeepEqual(expectedMgmtHLSwitchEnclosure, mgmtHLSwitchEnclosure) {
@@ -491,8 +529,8 @@ func TestChassisChildren(t *testing.T) {
 	// Create a child RouterModule
 	routerModule := chassis.RouterModule(3)
 	expetedRouterModule := RouterModule{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:      1,
+		Chassis:      2,
 		RouterModule: 3,
 	}
 	if !reflect.DeepEqual(expetedRouterModule, routerModule) {
@@ -505,7 +543,7 @@ func TestChassisParent(t *testing.T) {
 		Cabinet: 1,
 		Chassis: 2,
 	}
-	
+
 	parent := chassis.Parent()
 	expectedParent := Cabinet{
 		Cabinet: 1,
@@ -521,11 +559,11 @@ func TestChassisBMCChildren(t *testing.T) {
 
 func TestChassisBMCParent(t *testing.T) {
 	chassisBMC := ChassisBMC{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:    1,
+		Chassis:    2,
 		ChassisBMC: 0,
 	}
-	
+
 	parent := chassisBMC.Parent()
 	expectedParent := Chassis{
 		Cabinet: 1,
@@ -538,17 +576,17 @@ func TestChassisBMCParent(t *testing.T) {
 
 func TestMgmtSwitchChildren(t *testing.T) {
 	mgmtSwitch := MgmtSwitch{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:    1,
+		Chassis:    2,
 		MgmtSwitch: 3,
 	}
 
 	// Create a child MgmtSwitchConnector
 	mgmtSwitchConnector := mgmtSwitch.MgmtSwitchConnector(4)
 	expectedMgmtSwitchConnector := MgmtSwitchConnector{
-		Cabinet: 1,
-		Chassis: 2,
-		MgmtSwitch: 3,
+		Cabinet:             1,
+		Chassis:             2,
+		MgmtSwitch:          3,
 		MgmtSwitchConnector: 4,
 	}
 	if !reflect.DeepEqual(expectedMgmtSwitchConnector, mgmtSwitchConnector) {
@@ -558,11 +596,11 @@ func TestMgmtSwitchChildren(t *testing.T) {
 
 func TestMgmtSwitchParent(t *testing.T) {
 	mgmtSwitch := MgmtSwitch{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:    1,
+		Chassis:    2,
 		MgmtSwitch: 3,
 	}
-	
+
 	parent := mgmtSwitch.Parent()
 	expectedParent := Chassis{
 		Cabinet: 1,
@@ -579,16 +617,16 @@ func TestMgmtSwitchConnectorChildren(t *testing.T) {
 
 func TestMgmtSwitchConnectorParent(t *testing.T) {
 	mgmtSwitchConnector := MgmtSwitchConnector{
-		Cabinet: 1,
-		Chassis: 2,
-		MgmtSwitch: 3,
+		Cabinet:             1,
+		Chassis:             2,
+		MgmtSwitch:          3,
 		MgmtSwitchConnector: 4,
 	}
-	
+
 	parent := mgmtSwitchConnector.Parent()
 	expectedParent := MgmtSwitch{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:    1,
+		Chassis:    2,
 		MgmtSwitch: 3,
 	}
 	if !reflect.DeepEqual(expectedParent, parent) {
@@ -598,18 +636,18 @@ func TestMgmtSwitchConnectorParent(t *testing.T) {
 
 func TestMgmtHLSwitchEnclosureChildren(t *testing.T) {
 	mgmtHLSwitchEnclosure := MgmtHLSwitchEnclosure{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:               1,
+		Chassis:               2,
 		MgmtHLSwitchEnclosure: 3,
 	}
 
 	// Create a child MgmtHLSwitch
 	mgmtHLSwitch := mgmtHLSwitchEnclosure.MgmtHLSwitch(4)
 	expectedMgmtHLSwitch := MgmtHLSwitch{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:               1,
+		Chassis:               2,
 		MgmtHLSwitchEnclosure: 3,
-		MgmtHLSwitch: 4,
+		MgmtHLSwitch:          4,
 	}
 	if !reflect.DeepEqual(expectedMgmtHLSwitch, mgmtHLSwitch) {
 		t.Errorf("TestMgmtHLSwitchEnclosureChildren FAIL: Expected mgmtHLSwitch=%v but instead got mgmtHLSwitch=%v", expectedMgmtHLSwitch, mgmtHLSwitch)
@@ -618,11 +656,11 @@ func TestMgmtHLSwitchEnclosureChildren(t *testing.T) {
 
 func TestMgmtHLSwitchEnclosureParent(t *testing.T) {
 	mgmtHLSwitchEnclosure := MgmtHLSwitchEnclosure{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:               1,
+		Chassis:               2,
 		MgmtHLSwitchEnclosure: 3,
 	}
-	
+
 	parent := mgmtHLSwitchEnclosure.Parent()
 	expectedParent := Chassis{
 		Cabinet: 1,
@@ -639,16 +677,16 @@ func TestMgmtHLSwitchChildren(t *testing.T) {
 
 func TestMgmtHLSwitchParent(t *testing.T) {
 	mgmtHLSwitch := MgmtHLSwitch{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:               1,
+		Chassis:               2,
 		MgmtHLSwitchEnclosure: 3,
-		MgmtHLSwitch: 4,
+		MgmtHLSwitch:          4,
 	}
-	
+
 	parent := mgmtHLSwitch.Parent()
 	expectedParent := MgmtHLSwitchEnclosure{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:               1,
+		Chassis:               2,
 		MgmtHLSwitchEnclosure: 3,
 	}
 	if !reflect.DeepEqual(expectedParent, parent) {
@@ -658,18 +696,18 @@ func TestMgmtHLSwitchParent(t *testing.T) {
 
 func TestRouterModuleChildren(t *testing.T) {
 	routerModule := RouterModule{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:      1,
+		Chassis:      2,
 		RouterModule: 3,
 	}
 
 	// Create a child RouterBMC
 	routerBMC := routerModule.RouterBMC(4)
 	expectedRouterBMC := RouterBMC{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:      1,
+		Chassis:      2,
 		RouterModule: 3,
-		RouterBMC: 4,
+		RouterBMC:    4,
 	}
 	if !reflect.DeepEqual(expectedRouterBMC, routerBMC) {
 		t.Errorf("TestRouterModuleChildren FAIL: Expected routerBMC=%v but instead got routerBMC=%v", expectedRouterBMC, routerBMC)
@@ -678,11 +716,11 @@ func TestRouterModuleChildren(t *testing.T) {
 
 func TestRouterModuleParent(t *testing.T) {
 	routerModule := RouterModule{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:      1,
+		Chassis:      2,
 		RouterModule: 3,
 	}
-	
+
 	parent := routerModule.Parent()
 	expectedParent := Chassis{
 		Cabinet: 1,
@@ -699,16 +737,16 @@ func TestRouterBMCChildren(t *testing.T) {
 
 func TestRouterBMCParent(t *testing.T) {
 	routerModule := RouterBMC{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:      1,
+		Chassis:      2,
 		RouterModule: 3,
-		RouterBMC: 4,
+		RouterBMC:    4,
 	}
-	
+
 	parent := routerModule.Parent()
 	expectedParent := RouterModule{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:      1,
+		Chassis:      2,
 		RouterModule: 3,
 	}
 	if !reflect.DeepEqual(expectedParent, parent) {
@@ -718,18 +756,18 @@ func TestRouterBMCParent(t *testing.T) {
 
 func TestComputeModuleChildren(t *testing.T) {
 	computeModule := ComputeModule{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:       1,
+		Chassis:       2,
 		ComputeModule: 3,
 	}
 
 	// Create a child NodeBMC
 	nodeBMC := computeModule.NodeBMC(4)
 	expectedNodeBMC := NodeBMC{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:       1,
+		Chassis:       2,
 		ComputeModule: 3,
-		NodeBMC: 4,
+		NodeBMC:       4,
 	}
 
 	if !reflect.DeepEqual(expectedNodeBMC, nodeBMC) {
@@ -739,11 +777,11 @@ func TestComputeModuleChildren(t *testing.T) {
 
 func TestComputeModuleParent(t *testing.T) {
 	computeModule := ComputeModule{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:       1,
+		Chassis:       2,
 		ComputeModule: 3,
 	}
-	
+
 	parent := computeModule.Parent()
 	expectedParent := Chassis{
 		Cabinet: 1,
@@ -756,20 +794,20 @@ func TestComputeModuleParent(t *testing.T) {
 
 func TestNodeBMCChildren(t *testing.T) {
 	nodeBMC := NodeBMC{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:       1,
+		Chassis:       2,
 		ComputeModule: 3,
-		NodeBMC: 4,
+		NodeBMC:       4,
 	}
 
 	// Create a child Node
 	node := nodeBMC.Node(0)
 	expectedNode := Node{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:       1,
+		Chassis:       2,
 		ComputeModule: 3,
-		NodeBMC: 4,
-		Node: 0,
+		NodeBMC:       4,
+		Node:          0,
 	}
 	if !reflect.DeepEqual(expectedNode, node) {
 		t.Errorf("TestNodeBMCChildren FAIL: Expected node=%v but instead got node=%v", expectedNode, node)
@@ -778,16 +816,16 @@ func TestNodeBMCChildren(t *testing.T) {
 
 func TestNodeBMCParent(t *testing.T) {
 	nodeBMC := NodeBMC{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:       1,
+		Chassis:       2,
 		ComputeModule: 3,
-		NodeBMC: 4,
+		NodeBMC:       4,
 	}
-	
+
 	parent := nodeBMC.Parent()
 	expectedParent := ComputeModule{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:       1,
+		Chassis:       2,
 		ComputeModule: 3,
 	}
 	if !reflect.DeepEqual(expectedParent, parent) {
@@ -801,19 +839,19 @@ func TestNodeChildren(t *testing.T) {
 
 func TestNodeParent(t *testing.T) {
 	node := Node{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:       1,
+		Chassis:       2,
 		ComputeModule: 3,
-		NodeBMC: 4,
-		Node: 0,
+		NodeBMC:       4,
+		Node:          0,
 	}
-	
+
 	parent := node.Parent()
 	expectedParent := NodeBMC{
-		Cabinet: 1,
-		Chassis: 2,
+		Cabinet:       1,
+		Chassis:       2,
 		ComputeModule: 3,
-		NodeBMC: 4,
+		NodeBMC:       4,
 	}
 	if !reflect.DeepEqual(expectedParent, parent) {
 		t.Errorf("TestNodeParent FAIL: Expected parent=%v but instead got parent=%v", expectedParent, parent)
@@ -840,4 +878,4 @@ func compareErrorSlices(x, y []error) bool {
 	}
 
 	return true
-} 
+}

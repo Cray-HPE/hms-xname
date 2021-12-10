@@ -23,4 +23,3 @@
 //go:generate go run ./generator
 
 package xname
-
