@@ -1,3 +1,25 @@
+// MIT License
+//
+// (C) Copyright [2021] Hewlett Packard Enterprise Development LP
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+// OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+
 package main
 
 import (
@@ -23,9 +45,8 @@ type XnameTypeNode struct {
 }
 
 func main() {
-	//
-	// Build up XnameHierarchyNodes
-	//
+
+	// These are special or wildcards HMSTypes that should not be generated.
 	typesToIgnore := map[xnametypes.HMSType]bool{}
 	typesToIgnore[xnametypes.SMSBox] = true
 	typesToIgnore[xnametypes.Partition] = true
@@ -33,8 +54,10 @@ func main() {
 	typesToIgnore[xnametypes.HMSTypeAllComp] = true
 	typesToIgnore[xnametypes.HMSTypeAllSvc] = true
 
+	//
+	// Build up XnameTypeNode
+	//
 	nodes := map[xnametypes.HMSType]*XnameTypeNode{}
-
 	for _, entry := range xnametypes.GetHMSCompRecognitionTable() {
 		if typesToIgnore[entry.Type] {
 			continue
@@ -50,7 +73,7 @@ func main() {
 	}
 
 	//
-	// Link nodes together
+	// Create the child and parent relationships between XnameTypeNode
 	//
 	for _, node := range nodes {
 		if node.Entry.ParentType == xnametypes.HMSTypeInvalid {
@@ -62,13 +85,15 @@ func main() {
 			panic(fmt.Errorf("Error: parent type (%v) does not exist for type (%v) ", node.Entry.ParentType, node.Entry.Type))
 		}
 
-		// Update links
+		// Update parent and child links
 		node.Parent = parentNode
 		parentNode.Children = append(parentNode.Children, node)
 	}
 
 	//
-	// Sort children
+	// Sort the elements of the child slice by their HMSType
+	// When templating this will generate the dot notation functions to get children
+	// in a deterministic order.
 	//
 	for _, node := range nodes {
 		sort.Slice(node.Children, func(i, j int) bool {
@@ -76,23 +101,23 @@ func main() {
 		})
 	}
 
-	// Determine fields
+	//
+	// Determine field names
+	//
 	for _, node := range nodes {
-		node.Fields = GetFields(node)
-		node.FieldPlaceHolders = GetFieldPlaceHolders(node)
+		node.Fields = getFields(node)
+		node.FieldPlaceHolders = getFieldPlaceHolders(node)
 
 		typeName := string(node.Entry.Type)
 		node.FunctionParameter = strings.ToLower(string(typeName[0])) + typeName[1:]
 	}
 
 	//
-	// The type tree
+	// Generate a list of HMSTypes based on the xname hierarchy.
+	// IE the System HMSType is generated first.
 	//
 	root := nodes[xnametypes.System]
-	typeNames := GetTypeNames(root)
-	// for _, t := range typeNames {
-	// 	fmt.Println(t)
-	// }
+	typeNames := getTypeNames(root)
 
 	xnameTypes := []*XnameTypeNode{}
 	for _, typeName := range typeNames {
@@ -102,31 +127,30 @@ func main() {
 	//
 	// Template
 	//
-	TemplateFile("./generator/types.go.tpl", "./types.go", xnameTypes)
-	TemplateFile("./generator/util.go.tpl", "./util.go", xnameTypes)
-	// Traverse(root, 0)
+	templateFile("./generator/types.go.tpl", "./types.go", xnameTypes)
+	templateFile("./generator/util.go.tpl", "./util.go", xnameTypes)
 }
 
-func Traverse(node *XnameTypeNode, level int) {
+func traverse(node *XnameTypeNode, level int) {
 	fmt.Printf("%s- %v\n", strings.Repeat("  ", level), node.Entry.Type)
 	fmt.Printf("%s Fields: [%v]\n", strings.Repeat("  ", level), strings.Join(node.Fields, ","))
 	fmt.Printf("%s FieldPlaceholders: [%v]\n", strings.Repeat("  ", level), strings.Join(node.FieldPlaceHolders, ","))
 	for _, child := range node.Children {
-		Traverse(child, level+1)
+		traverse(child, level+1)
 	}
 }
 
-func GetTypeNames(node *XnameTypeNode) []xnametypes.HMSType {
+func getTypeNames(node *XnameTypeNode) []xnametypes.HMSType {
 	types := []xnametypes.HMSType{node.Entry.Type}
 
 	for _, child := range node.Children {
-		types = append(types, GetTypeNames(child)...)
+		types = append(types, getTypeNames(child)...)
 	}
 
 	return types
 }
 
-func GetFields(node *XnameTypeNode) []string {
+func getFields(node *XnameTypeNode) []string {
 	if node == nil {
 		return nil
 	}
@@ -135,10 +159,10 @@ func GetFields(node *XnameTypeNode) []string {
 		return nil
 	}
 
-	return append(GetFields(node.Parent), string(node.Entry.Type))
+	return append(getFields(node.Parent), string(node.Entry.Type))
 }
 
-func GetFieldPlaceHolders(node *XnameTypeNode) []string {
+func getFieldPlaceHolders(node *XnameTypeNode) []string {
 	if node == nil {
 		return nil
 	}
@@ -152,10 +176,10 @@ func GetFieldPlaceHolders(node *XnameTypeNode) []string {
 	// CDUMgmtSwitch would be wW
 	placeholder := node.Entry.ExampleString[len(node.Entry.ExampleString)-2:]
 
-	return append(GetFieldPlaceHolders(node.Parent), placeholder)
+	return append(getFieldPlaceHolders(node.Parent), placeholder)
 }
 
-func TemplateFile(sourceFilePath, destFilePath string, xnameTypes []*XnameTypeNode) {
+func templateFile(sourceFilePath, destFilePath string, xnameTypes []*XnameTypeNode) {
 	fmt.Println("Templating", sourceFilePath)
 	t, err := template.ParseFiles(sourceFilePath)
 	if err != nil {
