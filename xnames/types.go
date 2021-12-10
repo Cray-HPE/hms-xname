@@ -53,7 +53,7 @@ func (x System) Cabinet(cabinet int) Cabinet {
 
 // CDU - dD
 type CDU struct {
-	CDU int
+	CDU int // dD
 }
 
 // String will stringify CDU into the format of dD
@@ -79,8 +79,8 @@ func (x CDU) CDUMgmtSwitch(cDUMgmtSwitch int) CDUMgmtSwitch {
 
 // CDUMgmtSwitch - dDwW
 type CDUMgmtSwitch struct {
-	CDU           int
-	CDUMgmtSwitch int
+	CDU           int // dD
+	CDUMgmtSwitch int // wW
 }
 
 // String will stringify CDUMgmtSwitch into the format of dDwW
@@ -101,7 +101,7 @@ func (x CDUMgmtSwitch) Parent() CDU {
 
 // Cabinet - xX
 type Cabinet struct {
-	Cabinet int
+	Cabinet int // xX
 }
 
 // String will stringify Cabinet into the format of xX
@@ -159,8 +159,8 @@ func (x Cabinet) Chassis(chassis int) Chassis {
 
 // CEC - xXeE
 type CEC struct {
-	Cabinet int
-	CEC     int
+	Cabinet int // xX
+	CEC     int // eE
 }
 
 // String will stringify CEC into the format of xXeE
@@ -181,8 +181,8 @@ func (x CEC) Parent() Cabinet {
 
 // CabinetBMC - xXbB
 type CabinetBMC struct {
-	Cabinet    int
-	CabinetBMC int
+	Cabinet    int // xX
+	CabinetBMC int // bB
 }
 
 // String will stringify CabinetBMC into the format of xXbB
@@ -203,8 +203,8 @@ func (x CabinetBMC) Parent() Cabinet {
 
 // CabinetCDU - xXdD
 type CabinetCDU struct {
-	Cabinet    int
-	CabinetCDU int
+	Cabinet    int // xX
+	CabinetCDU int // dD
 }
 
 // String will stringify CabinetCDU into the format of xXdD
@@ -225,8 +225,8 @@ func (x CabinetCDU) Parent() Cabinet {
 
 // CabinetPDUController - xXmM
 type CabinetPDUController struct {
-	Cabinet              int
-	CabinetPDUController int
+	Cabinet              int // xX
+	CabinetPDUController int // mM
 }
 
 // String will stringify CabinetPDUController into the format of xXmM
@@ -265,9 +265,9 @@ func (x CabinetPDUController) CabinetPDUNic(cabinetPDUNic int) CabinetPDUNic {
 
 // CabinetPDU - xXmMpP
 type CabinetPDU struct {
-	Cabinet              int
-	CabinetPDUController int
-	CabinetPDU           int
+	Cabinet              int // xX
+	CabinetPDUController int // mM
+	CabinetPDU           int // pP
 }
 
 // String will stringify CabinetPDU into the format of xXmMpP
@@ -310,10 +310,10 @@ func (x CabinetPDU) CabinetPDUPowerConnector(cabinetPDUPowerConnector int) Cabin
 
 // CabinetPDUOutlet - xXmMpPjJ
 type CabinetPDUOutlet struct {
-	Cabinet              int
-	CabinetPDUController int
-	CabinetPDU           int
-	CabinetPDUOutlet     int
+	Cabinet              int // xX
+	CabinetPDUController int // mM
+	CabinetPDU           int // pP
+	CabinetPDUOutlet     int // jJ
 }
 
 // String will stringify CabinetPDUOutlet into the format of xXmMpPjJ
@@ -338,10 +338,10 @@ func (x CabinetPDUOutlet) Parent() CabinetPDU {
 
 // CabinetPDUPowerConnector - xXmMpPvV
 type CabinetPDUPowerConnector struct {
-	Cabinet                  int
-	CabinetPDUController     int
-	CabinetPDU               int
-	CabinetPDUPowerConnector int
+	Cabinet                  int // xX
+	CabinetPDUController     int // mM
+	CabinetPDU               int // pP
+	CabinetPDUPowerConnector int // vV
 }
 
 // String will stringify CabinetPDUPowerConnector into the format of xXmMpPvV
@@ -366,9 +366,9 @@ func (x CabinetPDUPowerConnector) Parent() CabinetPDU {
 
 // CabinetPDUNic - xXmMpPiI
 type CabinetPDUNic struct {
-	Cabinet              int
-	CabinetPDUController int
-	CabinetPDUNic        int
+	Cabinet              int // xX
+	CabinetPDUController int // mM
+	CabinetPDUNic        int // iI
 }
 
 // String will stringify CabinetPDUNic into the format of xXmMpPiI
@@ -391,8 +391,8 @@ func (x CabinetPDUNic) Parent() CabinetPDUController {
 
 // Chassis - xXcC
 type Chassis struct {
-	Cabinet int
-	Chassis int
+	Cabinet int // xX
+	Chassis int // cC
 }
 
 // String will stringify Chassis into the format of xXcC
@@ -476,9 +476,9 @@ func (x Chassis) RouterModule(routerModule int) RouterModule {
 
 // CMMFpga - xXcCfF
 type CMMFpga struct {
-	Cabinet int
-	Chassis int
-	CMMFpga int
+	Cabinet int // xX
+	Chassis int // cC
+	CMMFpga int // fF
 }
 
 // String will stringify CMMFpga into the format of xXcCfF
@@ -501,9 +501,9 @@ func (x CMMFpga) Parent() Chassis {
 
 // CMMRectifier - xXcCtT
 type CMMRectifier struct {
-	Cabinet      int
-	Chassis      int
-	CMMRectifier int
+	Cabinet      int // xX
+	Chassis      int // cC
+	CMMRectifier int // tT
 }
 
 // String will stringify CMMRectifier into the format of xXcCtT
@@ -526,9 +526,9 @@ func (x CMMRectifier) Parent() Chassis {
 
 // ChassisBMC - xXcCbB
 type ChassisBMC struct {
-	Cabinet    int
-	Chassis    int
-	ChassisBMC int
+	Cabinet    int // xX
+	Chassis    int // cC
+	ChassisBMC int // bB
 }
 
 // String will stringify ChassisBMC into the format of xXcCbB
@@ -561,10 +561,10 @@ func (x ChassisBMC) ChassisBMCNic(chassisBMCNic int) ChassisBMCNic {
 
 // ChassisBMCNic - xXcCbBiI
 type ChassisBMCNic struct {
-	Cabinet       int
-	Chassis       int
-	ChassisBMC    int
-	ChassisBMCNic int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ChassisBMC    int // bB
+	ChassisBMCNic int // iI
 }
 
 // String will stringify ChassisBMCNic into the format of xXcCbBiI
@@ -589,9 +589,9 @@ func (x ChassisBMCNic) Parent() ChassisBMC {
 
 // ComputeModule - xXcCsS
 type ComputeModule struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
 }
 
 // String will stringify ComputeModule into the format of xXcCsS
@@ -644,10 +644,10 @@ func (x ComputeModule) NodePowerConnector(nodePowerConnector int) NodePowerConne
 
 // NodeBMC - xXcCsSbB
 type NodeBMC struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeBMC       int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeBMC       int // bB
 }
 
 // String will stringify NodeBMC into the format of xXcCsSbB
@@ -694,11 +694,11 @@ func (x NodeBMC) NodeBMCNic(nodeBMCNic int) NodeBMCNic {
 
 // Node - xXcCsSbBnN
 type Node struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeBMC       int
-	Node          int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeBMC       int // bB
+	Node          int // nN
 }
 
 // String will stringify Node into the format of xXcCsSbBnN
@@ -809,12 +809,12 @@ func (x Node) StorageGroup(storageGroup int) StorageGroup {
 
 // Memory - xXcCsSbBnNdD
 type Memory struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeBMC       int
-	Node          int
-	Memory        int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeBMC       int // bB
+	Node          int // nN
+	Memory        int // dD
 }
 
 // String will stringify Memory into the format of xXcCsSbBnNdD
@@ -843,12 +843,12 @@ func (x Memory) Parent() Node {
 
 // NodeAccel - xXcCsSbBnNaA
 type NodeAccel struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeBMC       int
-	Node          int
-	NodeAccel     int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeBMC       int // bB
+	Node          int // nN
+	NodeAccel     int // aA
 }
 
 // String will stringify NodeAccel into the format of xXcCsSbBnNaA
@@ -877,12 +877,12 @@ func (x NodeAccel) Parent() Node {
 
 // NodeAccelRiser - xXcCsSbBnNrR
 type NodeAccelRiser struct {
-	Cabinet        int
-	Chassis        int
-	ComputeModule  int
-	NodeBMC        int
-	Node           int
-	NodeAccelRiser int
+	Cabinet        int // xX
+	Chassis        int // cC
+	ComputeModule  int // sS
+	NodeBMC        int // bB
+	Node           int // nN
+	NodeAccelRiser int // rR
 }
 
 // String will stringify NodeAccelRiser into the format of xXcCsSbBnNrR
@@ -911,12 +911,12 @@ func (x NodeAccelRiser) Parent() Node {
 
 // NodeHsnNic - xXcCsSbBnNhH
 type NodeHsnNic struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeBMC       int
-	Node          int
-	NodeHsnNic    int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeBMC       int // bB
+	Node          int // nN
+	NodeHsnNic    int // hH
 }
 
 // String will stringify NodeHsnNic into the format of xXcCsSbBnNhH
@@ -945,12 +945,12 @@ func (x NodeHsnNic) Parent() Node {
 
 // NodeNic - xXcCsSbBnNiI
 type NodeNic struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeBMC       int
-	Node          int
-	NodeNic       int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeBMC       int // bB
+	Node          int // nN
+	NodeNic       int // iI
 }
 
 // String will stringify NodeNic into the format of xXcCsSbBnNiI
@@ -979,12 +979,12 @@ func (x NodeNic) Parent() Node {
 
 // Processor - xXcCsSbBnNpP
 type Processor struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeBMC       int
-	Node          int
-	Processor     int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeBMC       int // bB
+	Node          int // nN
+	Processor     int // pP
 }
 
 // String will stringify Processor into the format of xXcCsSbBnNpP
@@ -1013,12 +1013,12 @@ func (x Processor) Parent() Node {
 
 // StorageGroup - xXcCsSbBnNgG
 type StorageGroup struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeBMC       int
-	Node          int
-	StorageGroup  int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeBMC       int // bB
+	Node          int // nN
+	StorageGroup  int // gG
 }
 
 // String will stringify StorageGroup into the format of xXcCsSbBnNgG
@@ -1060,13 +1060,13 @@ func (x StorageGroup) Drive(drive int) Drive {
 
 // Drive - xXcCsSbBnNgGkK
 type Drive struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeBMC       int
-	Node          int
-	StorageGroup  int
-	Drive         int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeBMC       int // bB
+	Node          int // nN
+	StorageGroup  int // gG
+	Drive         int // kK
 }
 
 // String will stringify Drive into the format of xXcCsSbBnNgGkK
@@ -1097,11 +1097,11 @@ func (x Drive) Parent() StorageGroup {
 
 // NodeBMCNic - xXcCsSbBiI
 type NodeBMCNic struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeBMC       int
-	NodeBMCNic    int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeBMC       int // bB
+	NodeBMCNic    int // iI
 }
 
 // String will stringify NodeBMCNic into the format of xXcCsSbBiI
@@ -1128,10 +1128,10 @@ func (x NodeBMCNic) Parent() NodeBMC {
 
 // NodeEnclosure - xXcCsSbBeE
 type NodeEnclosure struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeEnclosure int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeEnclosure int // eE
 }
 
 // String will stringify NodeEnclosure into the format of xXcCsSbBeE
@@ -1178,11 +1178,11 @@ func (x NodeEnclosure) NodeFpga(nodeFpga int) NodeFpga {
 
 // NodeEnclosurePowerSupply - xXcCsSbBeEtT
 type NodeEnclosurePowerSupply struct {
-	Cabinet                  int
-	Chassis                  int
-	ComputeModule            int
-	NodeEnclosure            int
-	NodeEnclosurePowerSupply int
+	Cabinet                  int // xX
+	Chassis                  int // cC
+	ComputeModule            int // sS
+	NodeEnclosure            int // eE
+	NodeEnclosurePowerSupply int // tT
 }
 
 // String will stringify NodeEnclosurePowerSupply into the format of xXcCsSbBeEtT
@@ -1209,11 +1209,11 @@ func (x NodeEnclosurePowerSupply) Parent() NodeEnclosure {
 
 // NodeFpga - xXcCsSbBfF
 type NodeFpga struct {
-	Cabinet       int
-	Chassis       int
-	ComputeModule int
-	NodeEnclosure int
-	NodeFpga      int
+	Cabinet       int // xX
+	Chassis       int // cC
+	ComputeModule int // sS
+	NodeEnclosure int // eE
+	NodeFpga      int // fF
 }
 
 // String will stringify NodeFpga into the format of xXcCsSbBfF
@@ -1240,10 +1240,10 @@ func (x NodeFpga) Parent() NodeEnclosure {
 
 // NodePowerConnector - xXcCsSv
 type NodePowerConnector struct {
-	Cabinet            int
-	Chassis            int
-	ComputeModule      int
-	NodePowerConnector int
+	Cabinet            int // xX
+	Chassis            int // cC
+	ComputeModule      int // sS
+	NodePowerConnector int // Sv
 }
 
 // String will stringify NodePowerConnector into the format of xXcCsSv
@@ -1268,9 +1268,9 @@ func (x NodePowerConnector) Parent() ComputeModule {
 
 // MgmtHLSwitchEnclosure - xXcChH
 type MgmtHLSwitchEnclosure struct {
-	Cabinet               int
-	Chassis               int
-	MgmtHLSwitchEnclosure int
+	Cabinet               int // xX
+	Chassis               int // cC
+	MgmtHLSwitchEnclosure int // hH
 }
 
 // String will stringify MgmtHLSwitchEnclosure into the format of xXcChH
@@ -1303,10 +1303,10 @@ func (x MgmtHLSwitchEnclosure) MgmtHLSwitch(mgmtHLSwitch int) MgmtHLSwitch {
 
 // MgmtHLSwitch - xXcChHsS
 type MgmtHLSwitch struct {
-	Cabinet               int
-	Chassis               int
-	MgmtHLSwitchEnclosure int
-	MgmtHLSwitch          int
+	Cabinet               int // xX
+	Chassis               int // cC
+	MgmtHLSwitchEnclosure int // hH
+	MgmtHLSwitch          int // sS
 }
 
 // String will stringify MgmtHLSwitch into the format of xXcChHsS
@@ -1331,9 +1331,9 @@ func (x MgmtHLSwitch) Parent() MgmtHLSwitchEnclosure {
 
 // MgmtSwitch - xXcCwW
 type MgmtSwitch struct {
-	Cabinet    int
-	Chassis    int
-	MgmtSwitch int
+	Cabinet    int // xX
+	Chassis    int // cC
+	MgmtSwitch int // wW
 }
 
 // String will stringify MgmtSwitch into the format of xXcCwW
@@ -1366,10 +1366,10 @@ func (x MgmtSwitch) MgmtSwitchConnector(mgmtSwitchConnector int) MgmtSwitchConne
 
 // MgmtSwitchConnector - xXcCwWjJ
 type MgmtSwitchConnector struct {
-	Cabinet             int
-	Chassis             int
-	MgmtSwitch          int
-	MgmtSwitchConnector int
+	Cabinet             int // xX
+	Chassis             int // cC
+	MgmtSwitch          int // wW
+	MgmtSwitchConnector int // jJ
 }
 
 // String will stringify MgmtSwitchConnector into the format of xXcCwWjJ
@@ -1394,9 +1394,9 @@ func (x MgmtSwitchConnector) Parent() MgmtSwitch {
 
 // RouterModule - xXcCrR
 type RouterModule struct {
-	Cabinet      int
-	Chassis      int
-	RouterModule int
+	Cabinet      int // xX
+	Chassis      int // cC
+	RouterModule int // rR
 }
 
 // String will stringify RouterModule into the format of xXcCrR
@@ -1489,10 +1489,10 @@ func (x RouterModule) RouterTOR(routerTOR int) RouterTOR {
 
 // HSNAsic - xXcCrRaA
 type HSNAsic struct {
-	Cabinet      int
-	Chassis      int
-	RouterModule int
-	HSNAsic      int
+	Cabinet      int // xX
+	Chassis      int // cC
+	RouterModule int // rR
+	HSNAsic      int // aA
 }
 
 // String will stringify HSNAsic into the format of xXcCrRaA
@@ -1528,11 +1528,11 @@ func (x HSNAsic) HSNLink(hSNLink int) HSNLink {
 
 // HSNLink - xXcCrRaAlL
 type HSNLink struct {
-	Cabinet      int
-	Chassis      int
-	RouterModule int
-	HSNAsic      int
-	HSNLink      int
+	Cabinet      int // xX
+	Chassis      int // cC
+	RouterModule int // rR
+	HSNAsic      int // aA
+	HSNLink      int // lL
 }
 
 // String will stringify HSNLink into the format of xXcCrRaAlL
@@ -1559,10 +1559,10 @@ func (x HSNLink) Parent() HSNAsic {
 
 // HSNBoard - xXcCrReE
 type HSNBoard struct {
-	Cabinet      int
-	Chassis      int
-	RouterModule int
-	HSNBoard     int
+	Cabinet      int // xX
+	Chassis      int // cC
+	RouterModule int // rR
+	HSNBoard     int // eE
 }
 
 // String will stringify HSNBoard into the format of xXcCrReE
@@ -1587,10 +1587,10 @@ func (x HSNBoard) Parent() RouterModule {
 
 // HSNConnector - xXcCrRjJ
 type HSNConnector struct {
-	Cabinet      int
-	Chassis      int
-	RouterModule int
-	HSNConnector int
+	Cabinet      int // xX
+	Chassis      int // cC
+	RouterModule int // rR
+	HSNConnector int // jJ
 }
 
 // String will stringify HSNConnector into the format of xXcCrRjJ
@@ -1626,11 +1626,11 @@ func (x HSNConnector) HSNConnectorPort(hSNConnectorPort int) HSNConnectorPort {
 
 // HSNConnectorPort - xXcCrRjJpP
 type HSNConnectorPort struct {
-	Cabinet          int
-	Chassis          int
-	RouterModule     int
-	HSNConnector     int
-	HSNConnectorPort int
+	Cabinet          int // xX
+	Chassis          int // cC
+	RouterModule     int // rR
+	HSNConnector     int // jJ
+	HSNConnectorPort int // pP
 }
 
 // String will stringify HSNConnectorPort into the format of xXcCrRjJpP
@@ -1657,10 +1657,10 @@ func (x HSNConnectorPort) Parent() HSNConnector {
 
 // RouterBMC - xXcCrRbB
 type RouterBMC struct {
-	Cabinet      int
-	Chassis      int
-	RouterModule int
-	RouterBMC    int
+	Cabinet      int // xX
+	Chassis      int // cC
+	RouterModule int // rR
+	RouterBMC    int // bB
 }
 
 // String will stringify RouterBMC into the format of xXcCrRbB
@@ -1696,11 +1696,11 @@ func (x RouterBMC) RouterBMCNic(routerBMCNic int) RouterBMCNic {
 
 // RouterBMCNic - xXcCrRbBiI
 type RouterBMCNic struct {
-	Cabinet      int
-	Chassis      int
-	RouterModule int
-	RouterBMC    int
-	RouterBMCNic int
+	Cabinet      int // xX
+	Chassis      int // cC
+	RouterModule int // rR
+	RouterBMC    int // bB
+	RouterBMCNic int // iI
 }
 
 // String will stringify RouterBMCNic into the format of xXcCrRbBiI
@@ -1727,10 +1727,10 @@ func (x RouterBMCNic) Parent() RouterBMC {
 
 // RouterFpga - xXcCrRfF
 type RouterFpga struct {
-	Cabinet      int
-	Chassis      int
-	RouterModule int
-	RouterFpga   int
+	Cabinet      int // xX
+	Chassis      int // cC
+	RouterModule int // rR
+	RouterFpga   int // fF
 }
 
 // String will stringify RouterFpga into the format of xXcCrRfF
@@ -1755,10 +1755,10 @@ func (x RouterFpga) Parent() RouterModule {
 
 // RouterPowerConnector - xXcCrRvV
 type RouterPowerConnector struct {
-	Cabinet              int
-	Chassis              int
-	RouterModule         int
-	RouterPowerConnector int
+	Cabinet              int // xX
+	Chassis              int // cC
+	RouterModule         int // rR
+	RouterPowerConnector int // vV
 }
 
 // String will stringify RouterPowerConnector into the format of xXcCrRvV
@@ -1783,10 +1783,10 @@ func (x RouterPowerConnector) Parent() RouterModule {
 
 // RouterTOR - xXcCrRtT
 type RouterTOR struct {
-	Cabinet      int
-	Chassis      int
-	RouterModule int
-	RouterTOR    int
+	Cabinet      int // xX
+	Chassis      int // cC
+	RouterModule int // rR
+	RouterTOR    int // tT
 }
 
 // String will stringify RouterTOR into the format of xXcCrRtT
@@ -1822,11 +1822,11 @@ func (x RouterTOR) RouterTORFpga(routerTORFpga int) RouterTORFpga {
 
 // RouterTORFpga - xXcCrRtTfF
 type RouterTORFpga struct {
-	Cabinet       int
-	Chassis       int
-	RouterModule  int
-	RouterTOR     int
-	RouterTORFpga int
+	Cabinet       int // xX
+	Chassis       int // cC
+	RouterModule  int // rR
+	RouterTOR     int // tT
+	RouterTORFpga int // fF
 }
 
 // String will stringify RouterTORFpga into the format of xXcCrRtTfF

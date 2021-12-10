@@ -29,8 +29,8 @@ import (
 {{ range $xnameType := . -}}
 // {{ $xnameType.Entry.Type }} - {{ $xnameType.Entry.ExampleString }}
 type {{ $xnameType.Entry.Type }} struct {
-{{- range $field := .Fields }}
-	{{ $field }} int
+{{- range $i, $field := .Fields }}
+	{{ $field }} int // {{ index $xnameType.FieldPlaceHolders $i }}
 {{- end }}
 }
 

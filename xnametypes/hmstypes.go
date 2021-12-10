@@ -377,7 +377,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 		"x%dc%ds%de%dt%d",
 		5,
 	},
-	"nodepowerconnector": { //'j' is deprecated, should be 'v'
+	"nodepowerconnector": { // 'j' is deprecated, should be 'v'
 		NodePowerConnector,
 		ComputeModule,
 		"xXcCsSv",
@@ -435,7 +435,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 	},
 	"memory": {
 		Memory,
-		Node, //parent is actually a socket but we'll use node
+		Node, // Parent is actually a socket but we'll use node
 		"xXcCsSbBnNdD",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])s([0-9]+)b([0-9]+)n([0-9]+)d([0-9]+)$"),
 		"x%dc%ds%db%dn%dd%d",

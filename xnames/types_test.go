@@ -45,38 +45,37 @@ func TestExample(t *testing.T) {
 	if expectedNodeXname != nodeXname {
 		t.Fatalf("Unexpected node xname (%s), expected (%s)", nodeXname, expectedNodeXname)
 	}
-	
+
 	nodeBMCXname := n.Parent().String()
 	expectedNodeBMCXname := "x1000c1s7b1"
 	if expectedNodeBMCXname != nodeBMCXname {
 		t.Fatalf("Unexpected node bmc xname (%s), expected (%s)", nodeBMCXname, expectedNodeXname)
 	}
-	
+
 	computeModuleXname := n.Parent().Parent().String()
 	expectedComputeModuleXname := "x1000c1s7"
 	if expectedComputeModuleXname != computeModuleXname {
 		t.Fatalf("Unexpected compute module xname (%s), expected (%s)", computeModuleXname, expectedComputeModuleXname)
 	}
-	
+
 	chassisXname := n.Parent().Parent().Parent().String()
 	expectedChassisXname := "x1000c1"
 	if expectedChassisXname != chassisXname {
 		t.Fatalf("Unexpected chassis xname (%s), expected (%s)", chassisXname, expectedChassisXname)
 	}
-	
+
 	cabinetXname := n.Parent().Parent().Parent().Parent().String()
 	expectedCabinetXname := "x1000"
 	if expectedCabinetXname != cabinetXname {
 		t.Fatalf("Unexpected cabinet xname (%s), expected (%s)", cabinetXname, expectedCabinetXname)
 	}
-	
+
 	systemXname := n.Parent().Parent().Parent().Parent().Parent().String()
 	expectedSystemXname := "s0"
 	if expectedSystemXname != systemXname {
 		t.Fatalf("Unexpected system xname (%s), expected (%s)", systemXname, expectedSystemXname)
 	}
 
-	
 	// n = Cabinet{Cabinet: 1000}.Chassis(1).NodeBMC(7, 1).Node(0)
 	// t.Log("Node:", n)
 	expectedNodeXname = "x1000c1s7b1n0"
@@ -856,26 +855,4 @@ func TestNodeParent(t *testing.T) {
 	if !reflect.DeepEqual(expectedParent, parent) {
 		t.Errorf("TestNodeParent FAIL: Expected parent=%v but instead got parent=%v", expectedParent, parent)
 	}
-}
-
-//
-//
-// Test Helpers
-//
-//
-
-func compareErrorSlices(x, y []error) bool {
-	if len(x) != len(y) {
-		return false
-	}
-
-	for i, errorX := range x {
-		errorY := y[i]
-
-		if errorX.Error() != errorY.Error() {
-			return false
-		}
-	}
-
-	return true
 }

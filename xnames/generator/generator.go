@@ -15,8 +15,9 @@ type XnameTypeNode struct {
 	Parent   *XnameTypeNode
 	Children []*XnameTypeNode
 
-	Entry  xnametypes.HMSCompRecognitionEntry
-	Fields []string
+	Entry             xnametypes.HMSCompRecognitionEntry
+	Fields            []string
+	FieldPlaceHolders []string
 
 	FunctionParameter string
 }
@@ -78,7 +79,7 @@ func main() {
 	// Determine fields
 	for _, node := range nodes {
 		node.Fields = GetFields(node)
-		// node.ParentFields = GetFields(node.Parent)
+		node.FieldPlaceHolders = GetFieldPlaceHolders(node)
 
 		typeName := string(node.Entry.Type)
 		node.FunctionParameter = strings.ToLower(string(typeName[0])) + typeName[1:]
@@ -103,10 +104,13 @@ func main() {
 	//
 	TemplateFile("./generator/types.go.tpl", "./types.go", xnameTypes)
 	TemplateFile("./generator/util.go.tpl", "./util.go", xnameTypes)
+	// Traverse(root, 0)
 }
 
 func Traverse(node *XnameTypeNode, level int) {
 	fmt.Printf("%s- %v\n", strings.Repeat("  ", level), node.Entry.Type)
+	fmt.Printf("%s Fields: [%v]\n", strings.Repeat("  ", level), strings.Join(node.Fields, ","))
+	fmt.Printf("%s FieldPlaceholders: [%v]\n", strings.Repeat("  ", level), strings.Join(node.FieldPlaceHolders, ","))
 	for _, child := range node.Children {
 		Traverse(child, level+1)
 	}
@@ -134,8 +138,24 @@ func GetFields(node *XnameTypeNode) []string {
 	return append(GetFields(node.Parent), string(node.Entry.Type))
 }
 
-func TemplateFile(sourceFilePath, destFilePath string, xnameTypes []*XnameTypeNode) {
+func GetFieldPlaceHolders(node *XnameTypeNode) []string {
+	if node == nil {
+		return nil
+	}
 
+	if node.Entry.Type == xnametypes.System {
+		return nil
+	}
+
+	// Get the last character of the example string.
+	// For example a CDUMgmtSwitch has dDwW, so the placeholder for the slot of a
+	// CDUMgmtSwitch would be wW
+	placeholder := node.Entry.ExampleString[len(node.Entry.ExampleString)-2:]
+
+	return append(GetFieldPlaceHolders(node.Parent), placeholder)
+}
+
+func TemplateFile(sourceFilePath, destFilePath string, xnameTypes []*XnameTypeNode) {
 	fmt.Println("Templating", sourceFilePath)
 	t, err := template.ParseFiles(sourceFilePath)
 	if err != nil {
