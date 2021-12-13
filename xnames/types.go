@@ -24,6 +24,8 @@ package xname
 
 import (
 	"fmt"
+
+	"github.com/Cray-HPE/hms-xname/xnametypes"
 )
 
 // System - sS
@@ -49,6 +51,16 @@ func (x System) Cabinet(cabinet int) Cabinet {
 	return Cabinet{
 		Cabinet: cabinet,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x System) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid System xname: %s", xname)
+	}
+
+	return nil
 }
 
 // CDU - dD
@@ -77,6 +89,16 @@ func (x CDU) CDUMgmtSwitch(cDUMgmtSwitch int) CDUMgmtSwitch {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CDU) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CDU xname: %s", xname)
+	}
+
+	return nil
+}
+
 // CDUMgmtSwitch - dDwW
 type CDUMgmtSwitch struct {
 	CDU           int // dD
@@ -97,6 +119,16 @@ func (x CDUMgmtSwitch) Parent() CDU {
 	return CDU{
 		CDU: x.CDU,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CDUMgmtSwitch) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CDUMgmtSwitch xname: %s", xname)
+	}
+
+	return nil
 }
 
 // Cabinet - xX
@@ -157,6 +189,16 @@ func (x Cabinet) Chassis(chassis int) Chassis {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x Cabinet) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid Cabinet xname: %s", xname)
+	}
+
+	return nil
+}
+
 // CEC - xXeE
 type CEC struct {
 	Cabinet int // xX
@@ -177,6 +219,16 @@ func (x CEC) Parent() Cabinet {
 	return Cabinet{
 		Cabinet: x.Cabinet,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CEC) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CEC xname: %s", xname)
+	}
+
+	return nil
 }
 
 // CabinetBMC - xXbB
@@ -201,6 +253,16 @@ func (x CabinetBMC) Parent() Cabinet {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CabinetBMC) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CabinetBMC xname: %s", xname)
+	}
+
+	return nil
+}
+
 // CabinetCDU - xXdD
 type CabinetCDU struct {
 	Cabinet    int // xX
@@ -221,6 +283,16 @@ func (x CabinetCDU) Parent() Cabinet {
 	return Cabinet{
 		Cabinet: x.Cabinet,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CabinetCDU) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CabinetCDU xname: %s", xname)
+	}
+
+	return nil
 }
 
 // CabinetPDUController - xXmM
@@ -261,6 +333,16 @@ func (x CabinetPDUController) CabinetPDUNic(cabinetPDUNic int) CabinetPDUNic {
 		CabinetPDUController: x.CabinetPDUController,
 		CabinetPDUNic:        cabinetPDUNic,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CabinetPDUController) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CabinetPDUController xname: %s", xname)
+	}
+
+	return nil
 }
 
 // CabinetPDU - xXmMpP
@@ -308,6 +390,16 @@ func (x CabinetPDU) CabinetPDUPowerConnector(cabinetPDUPowerConnector int) Cabin
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CabinetPDU) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CabinetPDU xname: %s", xname)
+	}
+
+	return nil
+}
+
 // CabinetPDUOutlet - xXmMpPjJ
 type CabinetPDUOutlet struct {
 	Cabinet              int // xX
@@ -334,6 +426,16 @@ func (x CabinetPDUOutlet) Parent() CabinetPDU {
 		CabinetPDUController: x.CabinetPDUController,
 		CabinetPDU:           x.CabinetPDU,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CabinetPDUOutlet) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CabinetPDUOutlet xname: %s", xname)
+	}
+
+	return nil
 }
 
 // CabinetPDUPowerConnector - xXmMpPvV
@@ -364,6 +466,16 @@ func (x CabinetPDUPowerConnector) Parent() CabinetPDU {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CabinetPDUPowerConnector) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CabinetPDUPowerConnector xname: %s", xname)
+	}
+
+	return nil
+}
+
 // CabinetPDUNic - xXmMpPiI
 type CabinetPDUNic struct {
 	Cabinet              int // xX
@@ -387,6 +499,16 @@ func (x CabinetPDUNic) Parent() CabinetPDUController {
 		Cabinet:              x.Cabinet,
 		CabinetPDUController: x.CabinetPDUController,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CabinetPDUNic) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CabinetPDUNic xname: %s", xname)
+	}
+
+	return nil
 }
 
 // Chassis - xXcC
@@ -474,6 +596,16 @@ func (x Chassis) RouterModule(routerModule int) RouterModule {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x Chassis) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid Chassis xname: %s", xname)
+	}
+
+	return nil
+}
+
 // CMMFpga - xXcCfF
 type CMMFpga struct {
 	Cabinet int // xX
@@ -499,6 +631,16 @@ func (x CMMFpga) Parent() Chassis {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CMMFpga) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CMMFpga xname: %s", xname)
+	}
+
+	return nil
+}
+
 // CMMRectifier - xXcCtT
 type CMMRectifier struct {
 	Cabinet      int // xX
@@ -522,6 +664,16 @@ func (x CMMRectifier) Parent() Chassis {
 		Cabinet: x.Cabinet,
 		Chassis: x.Chassis,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x CMMRectifier) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid CMMRectifier xname: %s", xname)
+	}
+
+	return nil
 }
 
 // ChassisBMC - xXcCbB
@@ -559,6 +711,16 @@ func (x ChassisBMC) ChassisBMCNic(chassisBMCNic int) ChassisBMCNic {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x ChassisBMC) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid ChassisBMC xname: %s", xname)
+	}
+
+	return nil
+}
+
 // ChassisBMCNic - xXcCbBiI
 type ChassisBMCNic struct {
 	Cabinet       int // xX
@@ -585,6 +747,16 @@ func (x ChassisBMCNic) Parent() ChassisBMC {
 		Chassis:    x.Chassis,
 		ChassisBMC: x.ChassisBMC,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x ChassisBMCNic) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid ChassisBMCNic xname: %s", xname)
+	}
+
+	return nil
 }
 
 // ComputeModule - xXcCsS
@@ -642,6 +814,16 @@ func (x ComputeModule) NodePowerConnector(nodePowerConnector int) NodePowerConne
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x ComputeModule) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid ComputeModule xname: %s", xname)
+	}
+
+	return nil
+}
+
 // NodeBMC - xXcCsSbB
 type NodeBMC struct {
 	Cabinet       int // xX
@@ -690,6 +872,16 @@ func (x NodeBMC) NodeBMCNic(nodeBMCNic int) NodeBMCNic {
 		NodeBMC:       x.NodeBMC,
 		NodeBMCNic:    nodeBMCNic,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x NodeBMC) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid NodeBMC xname: %s", xname)
+	}
+
+	return nil
 }
 
 // Node - xXcCsSbBnN
@@ -807,6 +999,16 @@ func (x Node) StorageGroup(storageGroup int) StorageGroup {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x Node) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid Node xname: %s", xname)
+	}
+
+	return nil
+}
+
 // Memory - xXcCsSbBnNdD
 type Memory struct {
 	Cabinet       int // xX
@@ -839,6 +1041,16 @@ func (x Memory) Parent() Node {
 		NodeBMC:       x.NodeBMC,
 		Node:          x.Node,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x Memory) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid Memory xname: %s", xname)
+	}
+
+	return nil
 }
 
 // NodeAccel - xXcCsSbBnNaA
@@ -875,6 +1087,16 @@ func (x NodeAccel) Parent() Node {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x NodeAccel) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid NodeAccel xname: %s", xname)
+	}
+
+	return nil
+}
+
 // NodeAccelRiser - xXcCsSbBnNrR
 type NodeAccelRiser struct {
 	Cabinet        int // xX
@@ -907,6 +1129,16 @@ func (x NodeAccelRiser) Parent() Node {
 		NodeBMC:       x.NodeBMC,
 		Node:          x.Node,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x NodeAccelRiser) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid NodeAccelRiser xname: %s", xname)
+	}
+
+	return nil
 }
 
 // NodeHsnNic - xXcCsSbBnNhH
@@ -943,6 +1175,16 @@ func (x NodeHsnNic) Parent() Node {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x NodeHsnNic) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid NodeHsnNic xname: %s", xname)
+	}
+
+	return nil
+}
+
 // NodeNic - xXcCsSbBnNiI
 type NodeNic struct {
 	Cabinet       int // xX
@@ -977,6 +1219,16 @@ func (x NodeNic) Parent() Node {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x NodeNic) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid NodeNic xname: %s", xname)
+	}
+
+	return nil
+}
+
 // Processor - xXcCsSbBnNpP
 type Processor struct {
 	Cabinet       int // xX
@@ -1009,6 +1261,16 @@ func (x Processor) Parent() Node {
 		NodeBMC:       x.NodeBMC,
 		Node:          x.Node,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x Processor) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid Processor xname: %s", xname)
+	}
+
+	return nil
 }
 
 // StorageGroup - xXcCsSbBnNgG
@@ -1058,6 +1320,16 @@ func (x StorageGroup) Drive(drive int) Drive {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x StorageGroup) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid StorageGroup xname: %s", xname)
+	}
+
+	return nil
+}
+
 // Drive - xXcCsSbBnNgGkK
 type Drive struct {
 	Cabinet       int // xX
@@ -1095,6 +1367,16 @@ func (x Drive) Parent() StorageGroup {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x Drive) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid Drive xname: %s", xname)
+	}
+
+	return nil
+}
+
 // NodeBMCNic - xXcCsSbBiI
 type NodeBMCNic struct {
 	Cabinet       int // xX
@@ -1124,6 +1406,16 @@ func (x NodeBMCNic) Parent() NodeBMC {
 		ComputeModule: x.ComputeModule,
 		NodeBMC:       x.NodeBMC,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x NodeBMCNic) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid NodeBMCNic xname: %s", xname)
+	}
+
+	return nil
 }
 
 // NodeEnclosure - xXcCsSbBeE
@@ -1176,6 +1468,16 @@ func (x NodeEnclosure) NodeFpga(nodeFpga int) NodeFpga {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x NodeEnclosure) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid NodeEnclosure xname: %s", xname)
+	}
+
+	return nil
+}
+
 // NodeEnclosurePowerSupply - xXcCsSbBeEtT
 type NodeEnclosurePowerSupply struct {
 	Cabinet                  int // xX
@@ -1205,6 +1507,16 @@ func (x NodeEnclosurePowerSupply) Parent() NodeEnclosure {
 		ComputeModule: x.ComputeModule,
 		NodeEnclosure: x.NodeEnclosure,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x NodeEnclosurePowerSupply) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid NodeEnclosurePowerSupply xname: %s", xname)
+	}
+
+	return nil
 }
 
 // NodeFpga - xXcCsSbBfF
@@ -1238,6 +1550,16 @@ func (x NodeFpga) Parent() NodeEnclosure {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x NodeFpga) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid NodeFpga xname: %s", xname)
+	}
+
+	return nil
+}
+
 // NodePowerConnector - xXcCsSv
 type NodePowerConnector struct {
 	Cabinet            int // xX
@@ -1264,6 +1586,16 @@ func (x NodePowerConnector) Parent() ComputeModule {
 		Chassis:       x.Chassis,
 		ComputeModule: x.ComputeModule,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x NodePowerConnector) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid NodePowerConnector xname: %s", xname)
+	}
+
+	return nil
 }
 
 // MgmtHLSwitchEnclosure - xXcChH
@@ -1301,6 +1633,16 @@ func (x MgmtHLSwitchEnclosure) MgmtHLSwitch(mgmtHLSwitch int) MgmtHLSwitch {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x MgmtHLSwitchEnclosure) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid MgmtHLSwitchEnclosure xname: %s", xname)
+	}
+
+	return nil
+}
+
 // MgmtHLSwitch - xXcChHsS
 type MgmtHLSwitch struct {
 	Cabinet               int // xX
@@ -1327,6 +1669,16 @@ func (x MgmtHLSwitch) Parent() MgmtHLSwitchEnclosure {
 		Chassis:               x.Chassis,
 		MgmtHLSwitchEnclosure: x.MgmtHLSwitchEnclosure,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x MgmtHLSwitch) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid MgmtHLSwitch xname: %s", xname)
+	}
+
+	return nil
 }
 
 // MgmtSwitch - xXcCwW
@@ -1364,6 +1716,16 @@ func (x MgmtSwitch) MgmtSwitchConnector(mgmtSwitchConnector int) MgmtSwitchConne
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x MgmtSwitch) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid MgmtSwitch xname: %s", xname)
+	}
+
+	return nil
+}
+
 // MgmtSwitchConnector - xXcCwWjJ
 type MgmtSwitchConnector struct {
 	Cabinet             int // xX
@@ -1390,6 +1752,16 @@ func (x MgmtSwitchConnector) Parent() MgmtSwitch {
 		Chassis:    x.Chassis,
 		MgmtSwitch: x.MgmtSwitch,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x MgmtSwitchConnector) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid MgmtSwitchConnector xname: %s", xname)
+	}
+
+	return nil
 }
 
 // RouterModule - xXcCrR
@@ -1487,6 +1859,16 @@ func (x RouterModule) RouterTOR(routerTOR int) RouterTOR {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x RouterModule) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid RouterModule xname: %s", xname)
+	}
+
+	return nil
+}
+
 // HSNAsic - xXcCrRaA
 type HSNAsic struct {
 	Cabinet      int // xX
@@ -1526,6 +1908,16 @@ func (x HSNAsic) HSNLink(hSNLink int) HSNLink {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x HSNAsic) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid HSNAsic xname: %s", xname)
+	}
+
+	return nil
+}
+
 // HSNLink - xXcCrRaAlL
 type HSNLink struct {
 	Cabinet      int // xX
@@ -1557,6 +1949,16 @@ func (x HSNLink) Parent() HSNAsic {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x HSNLink) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid HSNLink xname: %s", xname)
+	}
+
+	return nil
+}
+
 // HSNBoard - xXcCrReE
 type HSNBoard struct {
 	Cabinet      int // xX
@@ -1583,6 +1985,16 @@ func (x HSNBoard) Parent() RouterModule {
 		Chassis:      x.Chassis,
 		RouterModule: x.RouterModule,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x HSNBoard) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid HSNBoard xname: %s", xname)
+	}
+
+	return nil
 }
 
 // HSNConnector - xXcCrRjJ
@@ -1624,6 +2036,16 @@ func (x HSNConnector) HSNConnectorPort(hSNConnectorPort int) HSNConnectorPort {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x HSNConnector) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid HSNConnector xname: %s", xname)
+	}
+
+	return nil
+}
+
 // HSNConnectorPort - xXcCrRjJpP
 type HSNConnectorPort struct {
 	Cabinet          int // xX
@@ -1653,6 +2075,16 @@ func (x HSNConnectorPort) Parent() HSNConnector {
 		RouterModule: x.RouterModule,
 		HSNConnector: x.HSNConnector,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x HSNConnectorPort) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid HSNConnectorPort xname: %s", xname)
+	}
+
+	return nil
 }
 
 // RouterBMC - xXcCrRbB
@@ -1694,6 +2126,16 @@ func (x RouterBMC) RouterBMCNic(routerBMCNic int) RouterBMCNic {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x RouterBMC) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid RouterBMC xname: %s", xname)
+	}
+
+	return nil
+}
+
 // RouterBMCNic - xXcCrRbBiI
 type RouterBMCNic struct {
 	Cabinet      int // xX
@@ -1725,6 +2167,16 @@ func (x RouterBMCNic) Parent() RouterBMC {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x RouterBMCNic) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid RouterBMCNic xname: %s", xname)
+	}
+
+	return nil
+}
+
 // RouterFpga - xXcCrRfF
 type RouterFpga struct {
 	Cabinet      int // xX
@@ -1753,6 +2205,16 @@ func (x RouterFpga) Parent() RouterModule {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x RouterFpga) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid RouterFpga xname: %s", xname)
+	}
+
+	return nil
+}
+
 // RouterPowerConnector - xXcCrRvV
 type RouterPowerConnector struct {
 	Cabinet              int // xX
@@ -1779,6 +2241,16 @@ func (x RouterPowerConnector) Parent() RouterModule {
 		Chassis:      x.Chassis,
 		RouterModule: x.RouterModule,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x RouterPowerConnector) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid RouterPowerConnector xname: %s", xname)
+	}
+
+	return nil
 }
 
 // RouterTOR - xXcCrRtT
@@ -1820,6 +2292,16 @@ func (x RouterTOR) RouterTORFpga(routerTORFpga int) RouterTORFpga {
 	}
 }
 
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x RouterTOR) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid RouterTOR xname: %s", xname)
+	}
+
+	return nil
+}
+
 // RouterTORFpga - xXcCrRtTfF
 type RouterTORFpga struct {
 	Cabinet       int // xX
@@ -1849,4 +2331,14 @@ func (x RouterTORFpga) Parent() RouterTOR {
 		RouterModule: x.RouterModule,
 		RouterTOR:    x.RouterTOR,
 	}
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x RouterTORFpga) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid RouterTORFpga xname: %s", xname)
+	}
+
+	return nil
 }

@@ -856,3 +856,116 @@ func TestNodeParent(t *testing.T) {
 		t.Errorf("TestNodeParent FAIL: Expected parent=%v but instead got parent=%v", expectedParent, parent)
 	}
 }
+
+// TestValidateValidXnames unit test function for Validate
+func TestValidateValidXnames(t *testing.T) {
+	invalidXnames := []interface{}{
+		CDU{
+			CDU: -1,
+		},
+		CDUMgmtSwitch{
+			CDU:           0,
+			CDUMgmtSwitch: -1,
+		},
+		Cabinet{
+			Cabinet: -1,
+		},
+		Chassis{
+			Cabinet: 1,
+			Chassis: -1,
+		},
+		ChassisBMC{
+			Cabinet:    1,
+			Chassis:    1,
+			ChassisBMC: 1, // This value needs to be 0
+		},
+		ChassisBMC{
+			Cabinet:    -1,
+			Chassis:    -1,
+			ChassisBMC: -1,
+		},
+	}
+
+	for _, xname := range invalidXnames {
+		if err := xname.(Validator).Validate(); err == nil {
+			t.Errorf("No validation error returned for xname (%v)", xname)
+		}
+	}
+
+}
+
+// TestValidateInvalidXnames unit test function for Validate
+func TestValidateInvalidXnames(t *testing.T) {
+
+	validXnames := []string{
+		"d0",
+		"d0w0",
+		"d0w1",
+		"d0w30",
+		"x0",
+		"x0b0",
+		"x0c0",
+		"x0c0b0",
+		"x0c0f0",
+		"x0c0r0",
+		"x0c0r0t0f0",
+		"x0c0r0t0f1",
+		"x0c0r1a0",
+		"x0c0r1a0l64",
+		"x0c0s0",
+		"x0c0s4j1",
+		"x0c0s64",
+		"x0c0t0",
+		"x0d0",
+		"x0e0",
+		"x0m0",
+		"x0m0i0",
+		"x0m0p0",
+		"x0m0p0j1",
+		"x1",
+		"x10",
+		"x100",
+		"x1000",
+		"x1234c0r1t0f0",
+		"x16c2s3b0n1",
+		"x16c2s3b0n1g1",
+		"x16c2s3b0n1g1k1",
+		"x16c2s3b0n1p1",
+		"x16c3r2f0",
+		"x16c3r4j7",
+		"x16c3r4j7p0",
+		"x16c3s0b0n1d3",
+		"x16c3s0b0n1h1",
+		"x16c3s0b0n1i1",
+		"x16c3s0b1n0a1",
+		"x16c3s1b1",
+		"x16c3s4b1f0",
+		"x1c0",
+		"x1c0h1s2",
+		"x1c0r2b0",
+		"x1c0r2e0",
+		"x1c0r47j31",
+		"x1c0w1",
+		"x1c2r3b0i0",
+		"x1m0p0j1",
+		"x1m0p1j10",
+		"x1m1p0j64",
+		"x2",
+		"x3",
+		"x3c0s16e0",
+	}
+
+	for _, xname := range validXnames {
+		x, xType := FromString(xname)
+		if xType == xnametypes.HMSTypeInvalid {
+			t.Errorf("FromString failed on %s", xname)
+			continue
+		}
+
+		if err := x.(Validator).Validate(); err != nil {
+			t.Errorf("Unexpected validation error (%v) with xname (%s)", err, xname)
+		}
+
+	}
+
+}

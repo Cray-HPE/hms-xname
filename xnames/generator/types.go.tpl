@@ -24,6 +24,8 @@ package xname
 
 import (
 	"fmt"
+
+	"github.com/Cray-HPE/hms-xname/xnametypes"
 )
 
 {{ range $xnameType := . -}}
@@ -67,5 +69,15 @@ func (x {{ $xnameType.Entry.Type }}) {{ $child.Entry.Type }}({{ $child.FunctionP
 	}
 }
 {{ end -}}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid() 
+func (x {{ $xnameType.Entry.Type }}) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid {{ $xnameType.Entry.Type }} xname: %s", xname)
+	}
+
+	return nil
+}
 
 {{ end -}}
