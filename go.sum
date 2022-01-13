@@ -1,3 +1,5 @@
+github.com/Cray-HPE/hms-base/v2 v2.0.0 h1:vlPjHwH8EAOy+oKpUh7/xXFb3KHlXYHLWJr+KS1IyOw=
+github.com/Cray-HPE/hms-base/v2 v2.0.0/go.mod h1:Mq+Ao3q4YtNZJZ1ly9wnEIKyvc3+QaA1B/xpiUpyhzQ=
 github.com/fsnotify/fsnotify v1.4.9 h1:hsms1Qyu0jgnwNXIxa+/V/PDsU6CfLf6CNO8H7IWoS4=
 github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4IgpuI1SZQ=
 github.com/hashicorp/go-cleanhttp v0.5.0/go.mod h1:JpRdi6/HCYpAwUzNwuwqhbovhLtngrth3wmdIIUrZ80=
