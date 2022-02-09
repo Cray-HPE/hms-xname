@@ -25,6 +25,7 @@ package xnametypes
 
 import (
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -321,6 +322,20 @@ func TestGetHMSCompParent(t *testing.T) {
 		if parentXname != test.expectedParentXname {
 			t.Errorf("TestGetHMSCompParent Test Case %d: FAIL: For xname=%v expected parent=%v but instead got parent=%v",
 				n, test.xname, test.expectedParentXname, parentXname)
+		}
+	}
+}
+
+func TestCompRecognitionTable(t *testing.T) {
+	for key, component := range hmsCompRecognitionTable {
+		actualNumArgs := strings.Count(component.GenStr, "%d")
+		if actualNumArgs != component.NumArgs {
+			t.Errorf("hmsCompRecognitionTable number of arguments in GenStr did not match NumArgs.\n"+
+				"Entry: %s,\n"+
+				"GenStr: %s, \n"+
+				"NumArgs: %d,\n"+
+				"Actual number of arguments: %d\n",
+				key, component.GenStr, component.NumArgs, actualNumArgs)
 		}
 	}
 }

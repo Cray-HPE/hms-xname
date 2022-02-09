@@ -289,7 +289,7 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 		"xXcCbBiI",
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])b([0])i([0-3])$"),
 		"x%dc%db%di%d",
-		3,
+		4,
 	},
 	"cmmfpga": {
 		CMMFpga,
