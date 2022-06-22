@@ -74,6 +74,12 @@ func (x System) Validate() error {
 	return nil
 }
 
+// IsController returns whether System is a controller type, i.e. that
+// would host a Redfish entry point
+func (x System) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // CDU - dD
 type CDU struct {
 	CDU int // dD
@@ -121,6 +127,12 @@ func (x CDU) Validate() error {
 	return nil
 }
 
+// IsController returns whether CDU is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CDU) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // CDUMgmtSwitch - dDwW
 type CDUMgmtSwitch struct {
 	CDU           int // dD
@@ -162,6 +174,12 @@ func (x CDUMgmtSwitch) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether CDUMgmtSwitch is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CDUMgmtSwitch) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // Cabinet - xX
@@ -243,6 +261,12 @@ func (x Cabinet) Validate() error {
 	return nil
 }
 
+// IsController returns whether Cabinet is a controller type, i.e. that
+// would host a Redfish entry point
+func (x Cabinet) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // CEC - xXeE
 type CEC struct {
 	Cabinet int // xX
@@ -284,6 +308,12 @@ func (x CEC) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether CEC is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CEC) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // CabinetBMC - xXbB
@@ -329,6 +359,12 @@ func (x CabinetBMC) Validate() error {
 	return nil
 }
 
+// IsController returns whether CabinetBMC is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CabinetBMC) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // CabinetCDU - xXdD
 type CabinetCDU struct {
 	Cabinet    int // xX
@@ -370,6 +406,12 @@ func (x CabinetCDU) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether CabinetCDU is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CabinetCDU) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // CabinetPDUController - xXmM
@@ -431,6 +473,12 @@ func (x CabinetPDUController) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether CabinetPDUController is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CabinetPDUController) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // CabinetPDU - xXmMpP
@@ -499,6 +547,12 @@ func (x CabinetPDU) Validate() error {
 	return nil
 }
 
+// IsController returns whether CabinetPDU is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CabinetPDU) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // CabinetPDUOutlet - xXmMpPjJ
 type CabinetPDUOutlet struct {
 	Cabinet              int // xX
@@ -546,6 +600,12 @@ func (x CabinetPDUOutlet) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether CabinetPDUOutlet is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CabinetPDUOutlet) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // CabinetPDUPowerConnector - xXmMpPvV
@@ -597,6 +657,12 @@ func (x CabinetPDUPowerConnector) Validate() error {
 	return nil
 }
 
+// IsController returns whether CabinetPDUPowerConnector is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CabinetPDUPowerConnector) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // CabinetPDUNic - xXmMpPiI
 type CabinetPDUNic struct {
 	Cabinet              int // xX
@@ -641,6 +707,12 @@ func (x CabinetPDUNic) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether CabinetPDUNic is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CabinetPDUNic) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // Chassis - xXcC
@@ -749,6 +821,12 @@ func (x Chassis) Validate() error {
 	return nil
 }
 
+// IsController returns whether Chassis is a controller type, i.e. that
+// would host a Redfish entry point
+func (x Chassis) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // CMMFpga - xXcCfF
 type CMMFpga struct {
 	Cabinet int // xX
@@ -795,6 +873,12 @@ func (x CMMFpga) Validate() error {
 	return nil
 }
 
+// IsController returns whether CMMFpga is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CMMFpga) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // CMMRectifier - xXcCtT
 type CMMRectifier struct {
 	Cabinet      int // xX
@@ -839,6 +923,12 @@ func (x CMMRectifier) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether CMMRectifier is a controller type, i.e. that
+// would host a Redfish entry point
+func (x CMMRectifier) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // ChassisBMC - xXcCbB
@@ -897,6 +987,12 @@ func (x ChassisBMC) Validate() error {
 	return nil
 }
 
+// IsController returns whether ChassisBMC is a controller type, i.e. that
+// would host a Redfish entry point
+func (x ChassisBMC) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // ChassisBMCNic - xXcCbBiI
 type ChassisBMCNic struct {
 	Cabinet       int // xX
@@ -944,6 +1040,12 @@ func (x ChassisBMCNic) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether ChassisBMCNic is a controller type, i.e. that
+// would host a Redfish entry point
+func (x ChassisBMCNic) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // ComputeModule - xXcCsS
@@ -1022,6 +1124,12 @@ func (x ComputeModule) Validate() error {
 	return nil
 }
 
+// IsController returns whether ComputeModule is a controller type, i.e. that
+// would host a Redfish entry point
+func (x ComputeModule) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // NodeBMC - xXcCsSbB
 type NodeBMC struct {
 	Cabinet       int // xX
@@ -1091,6 +1199,12 @@ func (x NodeBMC) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether NodeBMC is a controller type, i.e. that
+// would host a Redfish entry point
+func (x NodeBMC) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // Node - xXcCsSbBnN
@@ -1229,6 +1343,12 @@ func (x Node) Validate() error {
 	return nil
 }
 
+// IsController returns whether Node is a controller type, i.e. that
+// would host a Redfish entry point
+func (x Node) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // Memory - xXcCsSbBnNdD
 type Memory struct {
 	Cabinet       int // xX
@@ -1282,6 +1402,12 @@ func (x Memory) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether Memory is a controller type, i.e. that
+// would host a Redfish entry point
+func (x Memory) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // NodeAccel - xXcCsSbBnNaA
@@ -1339,6 +1465,12 @@ func (x NodeAccel) Validate() error {
 	return nil
 }
 
+// IsController returns whether NodeAccel is a controller type, i.e. that
+// would host a Redfish entry point
+func (x NodeAccel) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // NodeAccelRiser - xXcCsSbBnNrR
 type NodeAccelRiser struct {
 	Cabinet        int // xX
@@ -1392,6 +1524,12 @@ func (x NodeAccelRiser) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether NodeAccelRiser is a controller type, i.e. that
+// would host a Redfish entry point
+func (x NodeAccelRiser) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // NodeHsnNic - xXcCsSbBnNhH
@@ -1449,6 +1587,12 @@ func (x NodeHsnNic) Validate() error {
 	return nil
 }
 
+// IsController returns whether NodeHsnNic is a controller type, i.e. that
+// would host a Redfish entry point
+func (x NodeHsnNic) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // NodeNic - xXcCsSbBnNiI
 type NodeNic struct {
 	Cabinet       int // xX
@@ -1504,6 +1648,12 @@ func (x NodeNic) Validate() error {
 	return nil
 }
 
+// IsController returns whether NodeNic is a controller type, i.e. that
+// would host a Redfish entry point
+func (x NodeNic) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // Processor - xXcCsSbBnNpP
 type Processor struct {
 	Cabinet       int // xX
@@ -1557,6 +1707,12 @@ func (x Processor) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether Processor is a controller type, i.e. that
+// would host a Redfish entry point
+func (x Processor) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // StorageGroup - xXcCsSbBnNgG
@@ -1627,6 +1783,12 @@ func (x StorageGroup) Validate() error {
 	return nil
 }
 
+// IsController returns whether StorageGroup is a controller type, i.e. that
+// would host a Redfish entry point
+func (x StorageGroup) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // Drive - xXcCsSbBnNgGkK
 type Drive struct {
 	Cabinet       int // xX
@@ -1685,6 +1847,12 @@ func (x Drive) Validate() error {
 	return nil
 }
 
+// IsController returns whether Drive is a controller type, i.e. that
+// would host a Redfish entry point
+func (x Drive) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // NodeBMCNic - xXcCsSbBiI
 type NodeBMCNic struct {
 	Cabinet       int // xX
@@ -1735,6 +1903,12 @@ func (x NodeBMCNic) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether NodeBMCNic is a controller type, i.e. that
+// would host a Redfish entry point
+func (x NodeBMCNic) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // NodeEnclosure - xXcCsSbBeE
@@ -1808,6 +1982,12 @@ func (x NodeEnclosure) Validate() error {
 	return nil
 }
 
+// IsController returns whether NodeEnclosure is a controller type, i.e. that
+// would host a Redfish entry point
+func (x NodeEnclosure) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // NodeEnclosurePowerSupply - xXcCsSbBeEtT
 type NodeEnclosurePowerSupply struct {
 	Cabinet                  int // xX
@@ -1858,6 +2038,12 @@ func (x NodeEnclosurePowerSupply) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether NodeEnclosurePowerSupply is a controller type, i.e. that
+// would host a Redfish entry point
+func (x NodeEnclosurePowerSupply) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // NodeFpga - xXcCsSbBfF
@@ -1912,6 +2098,12 @@ func (x NodeFpga) Validate() error {
 	return nil
 }
 
+// IsController returns whether NodeFpga is a controller type, i.e. that
+// would host a Redfish entry point
+func (x NodeFpga) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // NodePowerConnector - xXcCsSv
 type NodePowerConnector struct {
 	Cabinet            int // xX
@@ -1959,6 +2151,12 @@ func (x NodePowerConnector) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether NodePowerConnector is a controller type, i.e. that
+// would host a Redfish entry point
+func (x NodePowerConnector) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // MgmtHLSwitchEnclosure - xXcChH
@@ -2017,6 +2215,12 @@ func (x MgmtHLSwitchEnclosure) Validate() error {
 	return nil
 }
 
+// IsController returns whether MgmtHLSwitchEnclosure is a controller type, i.e. that
+// would host a Redfish entry point
+func (x MgmtHLSwitchEnclosure) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // MgmtHLSwitch - xXcChHsS
 type MgmtHLSwitch struct {
 	Cabinet               int // xX
@@ -2064,6 +2268,12 @@ func (x MgmtHLSwitch) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether MgmtHLSwitch is a controller type, i.e. that
+// would host a Redfish entry point
+func (x MgmtHLSwitch) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // MgmtSwitch - xXcCwW
@@ -2122,6 +2332,12 @@ func (x MgmtSwitch) Validate() error {
 	return nil
 }
 
+// IsController returns whether MgmtSwitch is a controller type, i.e. that
+// would host a Redfish entry point
+func (x MgmtSwitch) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // MgmtSwitchConnector - xXcCwWjJ
 type MgmtSwitchConnector struct {
 	Cabinet             int // xX
@@ -2169,6 +2385,12 @@ func (x MgmtSwitchConnector) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether MgmtSwitchConnector is a controller type, i.e. that
+// would host a Redfish entry point
+func (x MgmtSwitchConnector) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // RouterModule - xXcCrR
@@ -2287,6 +2509,12 @@ func (x RouterModule) Validate() error {
 	return nil
 }
 
+// IsController returns whether RouterModule is a controller type, i.e. that
+// would host a Redfish entry point
+func (x RouterModule) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // HSNAsic - xXcCrRaA
 type HSNAsic struct {
 	Cabinet      int // xX
@@ -2347,6 +2575,12 @@ func (x HSNAsic) Validate() error {
 	return nil
 }
 
+// IsController returns whether HSNAsic is a controller type, i.e. that
+// would host a Redfish entry point
+func (x HSNAsic) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // HSNLink - xXcCrRaAlL
 type HSNLink struct {
 	Cabinet      int // xX
@@ -2399,6 +2633,12 @@ func (x HSNLink) Validate() error {
 	return nil
 }
 
+// IsController returns whether HSNLink is a controller type, i.e. that
+// would host a Redfish entry point
+func (x HSNLink) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // HSNBoard - xXcCrReE
 type HSNBoard struct {
 	Cabinet      int // xX
@@ -2446,6 +2686,12 @@ func (x HSNBoard) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether HSNBoard is a controller type, i.e. that
+// would host a Redfish entry point
+func (x HSNBoard) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // HSNConnector - xXcCrRjJ
@@ -2508,6 +2754,12 @@ func (x HSNConnector) Validate() error {
 	return nil
 }
 
+// IsController returns whether HSNConnector is a controller type, i.e. that
+// would host a Redfish entry point
+func (x HSNConnector) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // HSNConnectorPort - xXcCrRjJpP
 type HSNConnectorPort struct {
 	Cabinet          int // xX
@@ -2558,6 +2810,12 @@ func (x HSNConnectorPort) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether HSNConnectorPort is a controller type, i.e. that
+// would host a Redfish entry point
+func (x HSNConnectorPort) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // RouterBMC - xXcCrRbB
@@ -2620,6 +2878,12 @@ func (x RouterBMC) Validate() error {
 	return nil
 }
 
+// IsController returns whether RouterBMC is a controller type, i.e. that
+// would host a Redfish entry point
+func (x RouterBMC) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // RouterBMCNic - xXcCrRbBiI
 type RouterBMCNic struct {
 	Cabinet      int // xX
@@ -2672,6 +2936,12 @@ func (x RouterBMCNic) Validate() error {
 	return nil
 }
 
+// IsController returns whether RouterBMCNic is a controller type, i.e. that
+// would host a Redfish entry point
+func (x RouterBMCNic) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // RouterFpga - xXcCrRfF
 type RouterFpga struct {
 	Cabinet      int // xX
@@ -2721,6 +2991,12 @@ func (x RouterFpga) Validate() error {
 	return nil
 }
 
+// IsController returns whether RouterFpga is a controller type, i.e. that
+// would host a Redfish entry point
+func (x RouterFpga) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // RouterPowerConnector - xXcCrRvV
 type RouterPowerConnector struct {
 	Cabinet              int // xX
@@ -2768,6 +3044,12 @@ func (x RouterPowerConnector) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether RouterPowerConnector is a controller type, i.e. that
+// would host a Redfish entry point
+func (x RouterPowerConnector) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 // RouterTOR - xXcCrRtT
@@ -2830,6 +3112,12 @@ func (x RouterTOR) Validate() error {
 	return nil
 }
 
+// IsController returns whether RouterTOR is a controller type, i.e. that
+// would host a Redfish entry point
+func (x RouterTOR) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 // RouterTORFpga - xXcCrRtTfF
 type RouterTORFpga struct {
 	Cabinet       int // xX
@@ -2880,4 +3168,10 @@ func (x RouterTORFpga) Validate() error {
 	}
 
 	return nil
+}
+
+// IsController returns whether RouterTORFpga is a controller type, i.e. that
+// would host a Redfish entry point
+func (x RouterTORFpga) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
 }

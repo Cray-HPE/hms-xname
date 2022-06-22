@@ -95,4 +95,10 @@ func (x {{ $xnameType.Entry.Type }}) Validate() error {
 	return nil
 }
 
+// IsController returns whether {{ $xnameType.Entry.Type }} is a controller type, i.e. that
+// would host a Redfish entry point
+func (x {{ $xnameType.Entry.Type }}) IsController() bool {
+	return xnametypes.IsHMSTypeController(x.Type())
+}
+
 {{ end -}}
