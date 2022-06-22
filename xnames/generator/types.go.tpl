@@ -20,7 +20,7 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-package xname
+package xnames
 
 import (
 	"fmt"
@@ -34,6 +34,11 @@ type {{ $xnameType.Entry.Type }} struct {
 {{- range $i, $field := .Fields }}
 	{{ $field }} int // {{ index $xnameType.FieldPlaceHolders $i }}
 {{- end }}
+}
+
+// Type will return the corresponding HMSType
+func (x {{ $xnameType.Entry.Type }}) Type() xnametypes.HMSType  {
+	return xnametypes.{{ $xnameType.Entry.Type }}
 }
 
 // String will stringify {{ $xnameType.Entry.Type }} into the format of {{ $xnameType.Entry.ExampleString }}
@@ -56,6 +61,16 @@ func (x {{ $xnameType.Entry.Type }}) Parent() {{ $xnameType.Entry.ParentType }} 
 	}
 }
 {{- end }}
+
+// ParentGeneric will determine the parent of this {{ $xnameType.Entry.Type }}, and return it as a GenericXname interface
+func (x {{ $xnameType.Entry.Type }}) ParentGeneric() GenericXname {
+	{{ if $xnameType.Parent -}}
+	return x.Parent()
+	{{- end }}
+	{{ if not $xnameType.Parent -}}
+	return nil
+	{{- end }}
+}
 
 {{ range $child := $xnameType.Children }}
 

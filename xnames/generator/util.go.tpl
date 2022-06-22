@@ -20,7 +20,7 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-package xname
+package xnames
 
 import (
 	"errors"
@@ -46,25 +46,25 @@ func GetHMSType(obj interface{}) (xnametypes.HMSType, error) {
 
 // FromString will convert the string representation of a xname into a xname structure
 // If the string is not a valid xname, then nil and HMSTypeInvalid will be returned. 
-func FromString(xname string) (interface{}, xnametypes.HMSType) {
+func FromString(xname string) GenericXname {
 	hmsType := xnametypes.GetHMSType(xname)
 	if hmsType == xnametypes.HMSTypeInvalid {
-		return nil, hmsType
+		return nil
 	}
 
 	re, err := xnametypes.GetHMSTypeRegex(hmsType)
 	if err != nil {
-		return nil, xnametypes.HMSTypeInvalid
+		return nil
 	}
 
 	_, argCount, err := xnametypes.GetHMSTypeFormatString(hmsType)
 	if err != nil {
-		return nil, xnametypes.HMSTypeInvalid
+		return nil
 	}
 
 	matchesRaw := re.FindStringSubmatch(xname)
 	if (argCount + 1) != len(matchesRaw) {
-		return nil, xnametypes.HMSTypeInvalid
+		return nil
 	}
 
 	// If we have gotten to this point these matches should be integers, so we can safely convert them
@@ -73,13 +73,13 @@ func FromString(xname string) (interface{}, xnametypes.HMSType) {
 	for _, matchRaw := range matchesRaw[1:] {
 		match, err := strconv.Atoi(matchRaw)
 		if err != nil {
-			return nil, xnametypes.HMSTypeInvalid
+			return nil
 		}
 
 		matches = append(matches, match)
 	}
 
-	var component interface{}
+	var component GenericXname
 
 	switch hmsType {
 {{- range $xnameType := . }}
@@ -91,7 +91,7 @@ func FromString(xname string) (interface{}, xnametypes.HMSType) {
 		}
 {{- end }}
 	default:
-		return nil, xnametypes.HMSTypeInvalid
+		return nil
 	}
-	return component, hmsType
+	return component
 }

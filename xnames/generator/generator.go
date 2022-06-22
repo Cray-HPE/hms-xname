@@ -196,6 +196,8 @@ func templateFile(sourceFilePath, destFilePath string, xnameTypes []*XnameTypeNo
 
 	fmt.Println("Formatting", destFilePath)
 	cmd := exec.Command("go", "fmt", destFilePath)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stdout
 	if err := cmd.Run(); err != nil {
 		panic(err)
 	}

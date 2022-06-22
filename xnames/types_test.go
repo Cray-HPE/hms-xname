@@ -21,7 +21,7 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-package xname
+package xnames
 
 import (
 	"fmt"
@@ -238,14 +238,6 @@ func TestToFromXnames(t *testing.T) {
 				Chassis:    2,
 				ChassisBMC: 0,
 			},
-			// }, { // TODO This causes a panic
-			// 	"x1c2b3",
-			// 	xnametypes.ChassisBMC,
-			// 	ChassisBMC{
-			// 		Cabinet: 1,
-			// 		Chassis: 2,
-			// 		BMC:     3,
-			// 	},
 		}, {
 			"x1c2h3",
 			xnametypes.MgmtHLSwitchEnclosure,
@@ -314,6 +306,15 @@ func TestToFromXnames(t *testing.T) {
 				ComputeModule: 3,
 				NodeBMC:       4,
 			},
+		}, { // This is our hack for GigabyteCMCs
+			"x1c2s3b999",
+			xnametypes.NodeBMC,
+			NodeBMC{
+				Cabinet:       1,
+				Chassis:       2,
+				ComputeModule: 3,
+				NodeBMC:       999,
+			},
 		}, {
 			"x1c2s3b4n5",
 			xnametypes.Node,
@@ -337,9 +338,9 @@ func TestToFromXnames(t *testing.T) {
 		}
 
 		// Verify FromString returns the HMS Type
-		componentRaw, hmsType := FromString(xname)
-		if expectedHMSType != hmsType {
-			t.Error("Unexpected HMS Type:", hmsType, "expected:", expectedHMSType)
+		componentRaw := FromString(xname)
+		if componentRaw == nil {
+			t.Errorf("Unable to convert xname from string: %v", xname)
 		}
 
 		// Verify FromString returns the correct xname struct values
@@ -954,11 +955,12 @@ func TestValidateInvalidXnames(t *testing.T) {
 		"x2",
 		"x3",
 		"x3c0s16e0",
+		"x3000c0s1b999",
 	}
 
 	for _, xname := range validXnames {
-		x, xType := FromString(xname)
-		if xType == xnametypes.HMSTypeInvalid {
+		x := FromString(xname)
+		if x == nil {
 			t.Errorf("FromString failed on %s", xname)
 			continue
 		}
