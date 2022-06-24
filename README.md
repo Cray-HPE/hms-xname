@@ -59,7 +59,7 @@ The xnames (xname **s**tructure/**s**tringify) package allows xnames to be manip
 There are three supported ways to create a xnames structure:
 1.  From xname string:
     ```go
-    nodeRaw, xnameType := xnames.FromString("x1000c1s7b1n0")
+    nodeRaw := xnames.FromString("x1000c1s7b1n0")
     node, ok := nodeRaw.(xnames.Node)
     ```
 

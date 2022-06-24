@@ -54,6 +54,7 @@ var goodTests = []TypeDecodePair{
 	{"x0c0s0", ComputeModule},
 	{"x0c0r0", RouterModule},
 	{"x0c0s0b0", NodeBMC},
+	{"x0c0s0b999", NodeBMC}, // This is our hack for Gigabyte CMCs
 	{"x0c0s0e0", NodeEnclosure},
 	{"x0c0s0e0t0", NodeEnclosurePowerSupply},
 	{"x0c0s0j1", NodePowerConnector},

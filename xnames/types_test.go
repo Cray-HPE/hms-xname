@@ -21,7 +21,7 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-package xname
+package xnames
 
 import (
 	"fmt"
@@ -238,14 +238,6 @@ func TestToFromXnames(t *testing.T) {
 				Chassis:    2,
 				ChassisBMC: 0,
 			},
-			// }, { // TODO This causes a panic
-			// 	"x1c2b3",
-			// 	xnametypes.ChassisBMC,
-			// 	ChassisBMC{
-			// 		Cabinet: 1,
-			// 		Chassis: 2,
-			// 		BMC:     3,
-			// 	},
 		}, {
 			"x1c2h3",
 			xnametypes.MgmtHLSwitchEnclosure,
@@ -314,6 +306,15 @@ func TestToFromXnames(t *testing.T) {
 				ComputeModule: 3,
 				NodeBMC:       4,
 			},
+		}, { // This is our hack for GigabyteCMCs
+			"x1c2s3b999",
+			xnametypes.NodeBMC,
+			NodeBMC{
+				Cabinet:       1,
+				Chassis:       2,
+				ComputeModule: 3,
+				NodeBMC:       999,
+			},
 		}, {
 			"x1c2s3b4n5",
 			xnametypes.Node,
@@ -337,9 +338,9 @@ func TestToFromXnames(t *testing.T) {
 		}
 
 		// Verify FromString returns the HMS Type
-		componentRaw, hmsType := FromString(xname)
-		if expectedHMSType != hmsType {
-			t.Error("Unexpected HMS Type:", hmsType, "expected:", expectedHMSType)
+		componentRaw := FromString(xname)
+		if componentRaw == nil {
+			t.Errorf("Unable to convert xname from string: %v", xname)
 		}
 
 		// Verify FromString returns the correct xname struct values
@@ -909,6 +910,7 @@ func TestValidateInvalidXnames(t *testing.T) {
 		"x0c0b0",
 		"x0c0f0",
 		"x0c0r0",
+		"x0c0r0b0",
 		"x0c0r0t0f0",
 		"x0c0r0t0f1",
 		"x0c0r1a0",
@@ -954,11 +956,12 @@ func TestValidateInvalidXnames(t *testing.T) {
 		"x2",
 		"x3",
 		"x3c0s16e0",
+		"x3000c0s1b999",
 	}
 
 	for _, xname := range validXnames {
-		x, xType := FromString(xname)
-		if xType == xnametypes.HMSTypeInvalid {
+		x := FromString(xname)
+		if x == nil {
 			t.Errorf("FromString failed on %s", xname)
 			continue
 		}
@@ -967,6 +970,85 @@ func TestValidateInvalidXnames(t *testing.T) {
 			t.Errorf("Unexpected validation error (%v) with xname (%s)", err, xname)
 		}
 
+	}
+
+}
+
+func TestType(t *testing.T) {
+	type typePair struct {
+		xnameStr     string
+		expectedType xnametypes.HMSType
+	}
+
+	var tests = []typePair{
+
+		{"d0", xnametypes.CDU},
+		{"d0w0", xnametypes.CDUMgmtSwitch},
+		{"x0d0", xnametypes.CabinetCDU},
+		{"x0m1p0", xnametypes.CabinetPDU},
+		{"x2000m3", xnametypes.CabinetPDUController},
+		{"x0m0i1", xnametypes.CabinetPDUNic},
+		{"x0m1p3j1", xnametypes.CabinetPDUOutlet},
+		{"x0m1p3v1", xnametypes.CabinetPDUPowerConnector},
+		{"x0", xnametypes.Cabinet},
+		{"x0b0", xnametypes.CabinetBMC},
+		{"x0c0", xnametypes.Chassis},
+		{"x0c0b0", xnametypes.ChassisBMC},
+		{"x0c0b0i1", xnametypes.ChassisBMCNic},
+		{"x0c0t9", xnametypes.CMMRectifier},
+		{"x0c0f0", xnametypes.CMMFpga},
+		{"x0e0", xnametypes.CEC},
+		{"x0c0s0", xnametypes.ComputeModule},
+		{"x0c0r0", xnametypes.RouterModule},
+		{"x0c0s0b0", xnametypes.NodeBMC},
+		{"x0c0s0b999", xnametypes.NodeBMC}, // This is our hack for Gigabyte CMCs
+		{"x0c0s0e0", xnametypes.NodeEnclosure},
+		{"x0c0s0e0t0", xnametypes.NodeEnclosurePowerSupply},
+		{"x0c0s0j1", xnametypes.NodePowerConnector},
+		{"x0c0s0v1", xnametypes.NodePowerConnector},
+		{"x0c0s0b0n0", xnametypes.Node},
+		{"x0c0s0b0n0p0", xnametypes.Processor},
+		{"x0c0s0b0n0g0k0", xnametypes.Drive},
+		{"x0c0s0b0n0g0", xnametypes.StorageGroup},
+		{"x0c0s0b0n0i1", xnametypes.NodeNic},
+		{"x0c0s0b0n0h1", xnametypes.NodeHsnNic},
+		{"x0c0s0b0n0d0", xnametypes.Memory},
+		{"x0c0s0b0n0a0", xnametypes.NodeAccel},
+		{"x0c0s0b0n0r0", xnametypes.NodeAccelRiser},
+		{"x0c0s0b0f0", xnametypes.NodeFpga},
+		{"x0c0r16e0", xnametypes.HSNBoard},
+		{"x0c0r0a0", xnametypes.HSNAsic},
+		{"x0c0r0f0", xnametypes.RouterFpga},
+		{"x0c0r0t0f0", xnametypes.RouterTORFpga},
+		{"x0c0r0b0", xnametypes.RouterBMC},
+		{"x0c0r0b0i1", xnametypes.RouterBMCNic},
+		{"x0c0r0v1", xnametypes.RouterPowerConnector},
+		{"x0c0r0a0l0", xnametypes.HSNLink},
+		{"x0c0r0j1", xnametypes.HSNConnector},
+		{"x0c0r0j1p1", xnametypes.HSNConnectorPort},
+		{"x0c0w1", xnametypes.MgmtSwitch},
+		{"x0c0w1j1", xnametypes.MgmtSwitchConnector},
+		{"x0c0h1s2", xnametypes.MgmtHLSwitch},
+		// These types are not currently supported by xnames
+		// {"sms1", SMSBox},
+		// {"p0.0", Partition},
+		// {"s0", System},
+		// {"all", HMSTypeAll},
+		// {"all_comp", HMSTypeAllComp},
+		// {"all_svc", HMSTypeAllSvc},
+	}
+
+	for _, test := range tests {
+		x := FromString(test.xnameStr)
+		if x == nil {
+			t.Errorf("FromString failed on %s", test.xnameStr)
+			continue
+		}
+
+		actualType := x.Type()
+		if x.Type() != test.expectedType {
+			t.Errorf("%v returned an unexpected HMS type of (%v), expected (%v)", test.xnameStr, actualType, test.expectedType)
+		}
 	}
 
 }
