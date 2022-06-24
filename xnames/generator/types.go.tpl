@@ -62,8 +62,8 @@ func (x {{ $xnameType.Entry.Type }}) Parent() {{ $xnameType.Entry.ParentType }} 
 }
 {{- end }}
 
-// ParentGeneric will determine the parent of this {{ $xnameType.Entry.Type }}, and return it as a GenericXname interface
-func (x {{ $xnameType.Entry.Type }}) ParentGeneric() GenericXname {
+// ParentGeneric will determine the parent of this {{ $xnameType.Entry.Type }}, and return it as a Xname interface
+func (x {{ $xnameType.Entry.Type }}) ParentInterface() Xname {
 	{{ if $xnameType.Parent -}}
 	return x.Parent()
 	{{- end }}
@@ -93,12 +93,6 @@ func (x {{ $xnameType.Entry.Type }}) Validate() error {
 	}
 
 	return nil
-}
-
-// IsController returns whether {{ $xnameType.Entry.Type }} is a controller type, i.e. that
-// would host a Redfish entry point
-func (x {{ $xnameType.Entry.Type }}) IsController() bool {
-	return xnametypes.IsHMSTypeController(x.Type())
 }
 
 {{ end -}}

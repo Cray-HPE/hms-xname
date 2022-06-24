@@ -9,13 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added the `GenericXname` interface to the `xnames` package. It is meant to provide a generic way to store or pass a xnames structure, such as to a function that can handle multiple different xnames types.
+- Added the `Xname` interface to the `xnames` package. It is meant to provide a generic way to store or pass a xnames structure, such as to a function that can handle multiple different xnames types.
 
   All of the xnames structures now implement the following functions:
   - `String() string` - build the xname string for the given structure
   - `Type() xnametypes.HMSType` - get the Type enumeration of the structure.
-  - `ParentGeneric() GenericXname` - get the xname 
-  - `IsController() bool` - returns true if the structure is a controller type, i.e. that  would host a Redfish entry point
+  - `ParentInterface() Xname` - get the parent structure but with the `Xname` interface.
 
 ### Changed
 
