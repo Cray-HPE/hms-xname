@@ -1,4 +1,3 @@
-//
 // MIT License
 //
 // (C) Copyright 2018-2022 Hewlett Packard Enterprise Development LP
@@ -20,7 +19,6 @@
 // OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
-//
 package xnametypes
 
 import (
@@ -757,7 +755,8 @@ func GetHMSTypeRegex(hmsType HMSType) (*regexp.Regexp, error) {
 func (t HMSType) String() string { return string(t) }
 
 // Given a properly formatted xname, get its immediate parent.
-//  i.e. x0c0s22b11 would become x0c0s22
+//
+//	i.e. x0c0s22b11 would become x0c0s22
 func GetHMSCompParent(xname string) string {
 	hmsType := GetHMSType(xname)
 	if hmsType == CDU || hmsType == Cabinet {
