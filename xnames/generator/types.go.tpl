@@ -95,4 +95,13 @@ func (x {{ $xnameType.Entry.Type }}) Validate() error {
 	return nil
 }
 
+func (x {{ $xnameType.Entry.Type }}) GetCabinet() (int, bool) {
+
+}
+
+
+func (x {{ $xnameType.Entry.Type }}) GetComputeSlot() (int, bool) {
+
+}
+
 {{ end -}}

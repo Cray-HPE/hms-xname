@@ -123,11 +123,26 @@ func main() {
 		xnameTypes = append(xnameTypes, nodes[typeName])
 	}
 
+	// for _, node := range nodes {
+	// 	node.Parent = nil
+	// }
+
+	// foo, err := json.MarshalIndent(root, "", "  ")
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// ioutil.WriteFile("xnametypes.json", foo, 0600)
+
 	//
 	// Template
 	//
-	templateFile("./generator/types.go.tpl", "./types.go", xnameTypes)
-	templateFile("./generator/util.go.tpl", "./util.go", xnameTypes)
+	// templateFile("./generator/types.go.tpl", "./types.go", xnameTypes)
+	// templateFile("./generator/util.go.tpl", "./util.go", xnameTypes)
+
+	fmt.Println("digraph D {")
+	traverseDot(root, nil)
+	fmt.Println("}")
+
 }
 
 func traverse(node *XnameTypeNode, level int) {
@@ -136,6 +151,23 @@ func traverse(node *XnameTypeNode, level int) {
 	fmt.Printf("%s FieldPlaceholders: [%v]\n", strings.Repeat("  ", level), strings.Join(node.FieldPlaceHolders, ","))
 	for _, child := range node.Children {
 		traverse(child, level+1)
+	}
+}
+
+func traverseDot(node *XnameTypeNode, parents []string) {
+	// fmt.Printf("%s- %v\n", strings.Repeat("  ", level), node.Entry.Type)
+	// fmt.Printf("%s Fields: [%v]\n", strings.Repeat("  ", level), strings.Join(node.Fields, ","))
+	// fmt.Printf("%s FieldPlaceholders: [%v]\n", strings.Repeat("  ", level), strings.Join(node.FieldPlaceHolders, ","))
+
+	current := fmt.Sprintf("\"%s (%s)\"", node.Entry.ExampleString, node.Entry.Type.String())
+	// fmt.Println(strings.Join(current, " -> "))
+
+	if len(parents) > 0 {
+		fmt.Println(parents[len(parents)-1], "->", current)
+	}
+
+	for _, child := range node.Children {
+		traverseDot(child, append(parents, current))
 	}
 }
 
