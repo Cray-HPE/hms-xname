@@ -1,7 +1,6 @@
-//
 // MIT License
 //
-// (C) Copyright 2018-2022 Hewlett Packard Enterprise Development LP
+// (C) Copyright 2018-2023 Hewlett Packard Enterprise Development LP
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -20,7 +19,6 @@
 // OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
-//
 package xnametypes
 
 import (
@@ -60,6 +58,7 @@ var goodTests = []TypeDecodePair{
 	{"x0c0s0j1", NodePowerConnector},
 	{"x0c0s0v1", NodePowerConnector},
 	{"x0c0s0b0n0", Node},
+	{"x0c0s0b0n0v0", VirtualNode},
 	{"x0c0s0b0n0p0", Processor},
 	{"x0c0s0b0n0g0k0", Drive},
 	{"x0c0s0b0n0g0", StorageGroup},
@@ -243,6 +242,13 @@ var compIDValidateTD = []ValidateTestData{
 		[]string{"xXcCrRtTfF", "x0c0r0t0f2"},
 		false,
 	},
+	{
+		// Test case 13 - VirtualNode
+		[]string{"xXcCsSbBnNvV", "x0c0s5b1n1v0", "x0c0s4b1n1v01"},
+		[]string{"x0c0s5b1n1v0", "x0c0s4b1n1v01"},
+		[]string{"xXcCsSbBnNvV"},
+		false,
+	},
 }
 
 // TestValidateCompIDs unit test function for ValidateCompIDs
@@ -291,6 +297,7 @@ var getHMSCompParentTestData = []GetHMSCompParentTestData{
 	{"x0c0s0j1", "x0c0s0"},             // NodePowerConnector
 	{"x0c0s0v1", "x0c0s0"},             // NodePowerConnector
 	{"x0c0s0b0n0", "x0c0s0b0"},         // Node
+	{"x0c0s0b0n0v0", "x0c0s0b0n0"},     // VirtualNode
 	{"x0c0s0b0n0p0", "x0c0s0b0n0"},     // Processor
 	{"x0c0s0b0n0g0k0", "x0c0s0b0n0g0"}, // Drive
 	{"x0c0s0b0n0g0", "x0c0s0b0n0"},     // StorageGroup
