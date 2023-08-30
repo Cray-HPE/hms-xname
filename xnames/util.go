@@ -93,6 +93,8 @@ func GetHMSType(obj interface{}) (xnametypes.HMSType, error) {
 		return xnametypes.StorageGroup, nil
 	case Drive, *Drive:
 		return xnametypes.Drive, nil
+	case VirtualNode, *VirtualNode:
+		return xnametypes.VirtualNode, nil
 	case NodeBMCNic, *NodeBMCNic:
 		return xnametypes.NodeBMCNic, nil
 	case NodeEnclosure, *NodeEnclosure:
@@ -361,6 +363,15 @@ func FromString(xname string) Xname {
 			Node:          matches[4],
 			StorageGroup:  matches[5],
 			Drive:         matches[6],
+		}
+	case xnametypes.VirtualNode:
+		component = VirtualNode{
+			Cabinet:       matches[0],
+			Chassis:       matches[1],
+			ComputeModule: matches[2],
+			NodeBMC:       matches[3],
+			Node:          matches[4],
+			VirtualNode:   matches[5],
 		}
 	case xnametypes.NodeBMCNic:
 		component = NodeBMCNic{
