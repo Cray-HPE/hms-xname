@@ -1,3 +1,3 @@
 module github.com/Cray-HPE/hms-xname
 
-go 1.20
+go 1.23
