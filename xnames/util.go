@@ -127,6 +127,8 @@ func GetHMSType(obj interface{}) (xnametypes.HMSType, error) {
 		return xnametypes.HSNConnectorPort, nil
 	case RouterBMC, *RouterBMC:
 		return xnametypes.RouterBMC, nil
+	case Router, *Router:
+		return xnametypes.Router, nil
 	case RouterBMCNic, *RouterBMCNic:
 		return xnametypes.RouterBMCNic, nil
 	case RouterFpga, *RouterFpga:
@@ -486,6 +488,14 @@ func FromString(xname string) Xname {
 			Chassis:      matches[1],
 			RouterModule: matches[2],
 			RouterBMC:    matches[3],
+		}
+	case xnametypes.Router:
+		component = Router{
+			Cabinet:      matches[0],
+			Chassis:      matches[1],
+			RouterModule: matches[2],
+			RouterBMC:    matches[3],
+			Router:       matches[4],
 		}
 	case xnametypes.RouterBMCNic:
 		component = RouterBMCNic{

@@ -87,6 +87,7 @@ const (
 	RouterTOR                HMSType = "RouterTOR"                // xXcCrRtT
 	RouterTORFpga            HMSType = "RouterTORFpga"            // xXcCrRtTfF
 	RouterBMC                HMSType = "RouterBMC"                // xXcCrRbB
+	Router                   HMSType = "Router"                   // xXcCrRbBnN (router/switch OS)
 	RouterBMCNic             HMSType = "RouterBMCNic"             // xXcCrRbBiI
 	RouterPowerConnector     HMSType = "RouterPowerConnector"     // xXcCrRvV
 
@@ -489,6 +490,14 @@ var hmsCompRecognitionTable = map[string]HMSCompRecognitionEntry{
 		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)b([0-9]+)$"),
 		"x%dc%dr%db%d",
 		4,
+	},
+	"router": {
+		Router,
+		RouterBMC,
+		"xXcCrRbBnN",
+		regexp.MustCompile("^x([0-9]{1,4})c([0-7])r([0-9]+)b([0-9]+)n([0-9]+)$"),
+		"x%dc%dr%db%dn%d",
+		5,
 	},
 	"routerbmcnic": {
 		RouterBMCNic,

@@ -2666,6 +2666,17 @@ func (x RouterBMC) ParentInterface() Xname {
 
 }
 
+// Router will get a child component with the specified ordinal
+func (x RouterBMC) Router(router int) Router {
+	return Router{
+		Cabinet:      x.Cabinet,
+		Chassis:      x.Chassis,
+		RouterModule: x.RouterModule,
+		RouterBMC:    x.RouterBMC,
+		Router:       router,
+	}
+}
+
 // RouterBMCNic will get a child component with the specified ordinal
 func (x RouterBMC) RouterBMCNic(routerBMCNic int) RouterBMCNic {
 	return RouterBMCNic{
@@ -2682,6 +2693,58 @@ func (x RouterBMC) Validate() error {
 	xname := x.String()
 	if !xnametypes.IsHMSCompIDValid(xname) {
 		return fmt.Errorf("invalid RouterBMC xname: %s", xname)
+	}
+
+	return nil
+}
+
+// Router - xXcCrRbBnN
+type Router struct {
+	Cabinet      int // xX
+	Chassis      int // cC
+	RouterModule int // rR
+	RouterBMC    int // bB
+	Router       int // nN
+}
+
+// Type will return the corresponding HMSType
+func (x Router) Type() xnametypes.HMSType {
+	return xnametypes.Router
+}
+
+// String will stringify Router into the format of xXcCrRbBnN
+func (x Router) String() string {
+	return fmt.Sprintf(
+		"x%dc%dr%db%dn%d",
+		x.Cabinet,
+		x.Chassis,
+		x.RouterModule,
+		x.RouterBMC,
+		x.Router,
+	)
+}
+
+// Parent will determine the parent of this Router
+func (x Router) Parent() RouterBMC {
+	return RouterBMC{
+		Cabinet:      x.Cabinet,
+		Chassis:      x.Chassis,
+		RouterModule: x.RouterModule,
+		RouterBMC:    x.RouterBMC,
+	}
+}
+
+// ParentGeneric will determine the parent of this Router, and return it as a Xname interface
+func (x Router) ParentInterface() Xname {
+	return x.Parent()
+
+}
+
+// Validate will validate the string representation of this structure against xnametypes.IsHMSCompIDValid()
+func (x Router) Validate() error {
+	xname := x.String()
+	if !xnametypes.IsHMSCompIDValid(xname) {
+		return fmt.Errorf("invalid Router xname: %s", xname)
 	}
 
 	return nil

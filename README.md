@@ -4,6 +4,11 @@
 
 This library contains the types, enumerations, structures and functions for interacting with xnames.
 
+`Router` identifies a router or switch OS instance at `xXcCrRbBnN`, for example
+`x4900c0r1b0n0`. Its parent is the `RouterBMC` at `x4900c0r1b0`; it is distinct
+from a compute `Node` (`xXcCsSbBnN`). The typed API provides
+`RouterBMC.Router(n)`, `Router.Parent()`, and parsing through `xnames.FromString`.
+
 * [xnametypes](#xnametypes)
     * [Adding a new xname type](#adding-a-new-xname-type)
 * [xnames](#xnames)
